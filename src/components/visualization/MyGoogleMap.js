@@ -1,23 +1,58 @@
-import React, { useCallback, useState } from 'react'
-import { GoogleMap, LoadScript, Marker, HeatmapLayer, useJsApiLoader } from '@react-google-maps/api';
+import React, { useEffect, useState, useRef } from 'react'
 import { Box } from '@mui/material';
-
-
+import Papa from 'papaparse';
+import GoogleMapReact from 'google-map-react';
+const Marker = ({ title }) => (
+    <div style={{ color: 'red', fontSize: '24px' }}>📍{title}</div>
+);
 export default function MyGoogleMap() {
-    const [map, setMap] = useState(null)
-
-    const mapStyles = { height: "86vh", width: "95vw", };
+    const [locations, setLocations] = useState([]);
     const defaultCenter = { lat: 23.685, lng: 90.3563 }; // Center of Bangladesh
+    const defaultZoom = 7;
+
+    // Load CSV data
+    useEffect(() => {
+        Papa.parse('/locations.csv', {
+            download: true,
+            header: true,
+            complete: (result) => {
+                setLocations(result.data);
+            },
+        });
+    }, []);
+
 
     return (
-        <Box className=''>
-            <LoadScript googleMapsApiKey="AIzaSyDYUDVcyIfjP-xMid-UAfMcwlqOBeii__I">
-                <GoogleMap
-                    mapContainerStyle={mapStyles}
-                    zoom={7}
-                    center={defaultCenter}
-                />
-            </LoadScript>
+        <Box>
+            <div style={{ height: '86vh', width: '95vw' }}>
+            <GoogleMapReact
+                bootstrapURLKeys={{ key: 'AIzaSyDYUDVcyIfjP-xMid-UAfMcwlqOBeii__I' }}
+                defaultCenter={defaultCenter}
+                defaultZoom={defaultZoom}
+            >
+                {locations.map((location, index) => {
+                    const lat = parseFloat(location.Latitude);
+                    const lng = parseFloat(location.Longitude);
+
+                    if (!isNaN(lat) && !isNaN(lng)) {
+                        console.log(lat)
+                        return (
+                            <Marker
+                                key={index}
+                                lat={lat}
+                                lng={lng}
+                                title={location.Address || location.District} // Optional: show title on marker
+                            />
+                        );
+                    } else {
+                        console.warn("Invalid coordinates:", location);
+                        return null;
+                    }
+                })}
+            </GoogleMapReact>
+        </div>
         </Box>
-    )
+    );
 }
+
+// AIzaSyDYUDVcyIfjP-xMid-UAfMcwlqOBeii__I

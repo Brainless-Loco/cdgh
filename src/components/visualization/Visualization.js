@@ -8,6 +8,7 @@ import FormLabel from '@mui/material/FormLabel'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import MyGoogleMap from './MyGoogleMap'
+import { Typography } from '@mui/material'
 
 
 export default function Visualization() {
@@ -25,7 +26,10 @@ export default function Visualization() {
             <Helmet>
                 <title>Map Visualization</title>
             </Helmet>
-            <Box className="w-full text-center">
+            <Box className='w-full text-center mb-5'>
+                <Typography variant='h4' >Geographic representations of patients in 2024.</Typography>
+            </Box>
+            {/* <Box className="w-full text-center">
                 <FormControl>
                     <FormLabel id="demo-row-radio-buttons-group-label">Select a category to visualize</FormLabel>
                     <RadioGroup
@@ -40,7 +44,7 @@ export default function Visualization() {
                         <FormControlLabel value="location" control={<Radio />} label="Location" />
                     </RadioGroup>
                 </FormControl>
-            </Box>
+            </Box> */}
             <Box className="flex justify-center rounded-3xl overflow-hidden">
                 <MyGoogleMap/>
             </Box>

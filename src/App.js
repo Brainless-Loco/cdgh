@@ -1,14 +1,14 @@
 import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Test from './components/Test';
 import Visualization from './components/visualization/Visualization';
+import Home from './components/Home/Home';
 
 function App() {
   return (
     <Router basename='/'>
       <Routes>
-        <Route path='/' element={<Test/>}/>
+        <Route path='/' element={<Home/>}/>
         <Route path='/visualization' element={<Visualization/>}/>
       </Routes>
       <Routes>

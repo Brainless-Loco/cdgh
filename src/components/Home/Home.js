@@ -12,6 +12,7 @@ import {
   Box,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import LocationOverallInBangladesh from '../visualization/LocationOverallInBangladesh';
 
 export default function Home() {
 
@@ -21,13 +22,13 @@ export default function Home() {
     {
       category: 'Location',
       levels: [
-        { label: 'Overall in Bangladesh', value: 'overall-bangladesh' },
-        { label: 'Division', value: 'division' },
-        { label: 'District', value: 'district' },
-        { label: 'Chittagong District', value: 'chittagong-district' },
+        { label: 'Overall in Bangladesh', value: 'location-overall-bangladesh' },
+        { label: 'Division', value: 'location-division' },
+        { label: 'District', value: 'location-district' },
+        { label: 'Chittagong District', value: 'location-chittagong-district' },
         {
           label: 'Chittagong City Corporation',
-          value: 'chittagong-city',
+          value: 'location-chittagong-city',
         },
       ],
     },
@@ -46,23 +47,24 @@ export default function Home() {
     {
       category: 'Time',
       levels: [
-        { label: 'Month', value: 'month' }, // Line Graph
-        { label: 'WeekDay', value: 'weekday' }, // Bargraph
+        { label: 'Month', value: 'time-month' }, // Line Graph
+        { label: 'WeekDay', value: 'time-weekday' }, // Bargraph
       ],
     },
     {
       category: 'Age',
       levels: [
-        { label: 'Overall in Bangladesh', value: 'p-age-overall-bangladesh' },
-        { label: 'Division Wise', value: 'p-age-division-wise' },
-        { label: 'Subdistrict Wise (Chittagong District)', value: 'c-age-chittagong-district' },
-        { label: 'Chittagong City Corporation', value: 'p-age-chittagong-city' },
+        { label: 'Overall in Bangladesh', value: 'age-overall-bangladesh' },
+        { label: 'Division Wise', value: 'age-division-wise' },
+        { label: 'Subdistrict Wise (Chittagong District)', value: 'age-chittagong-district' },
+        { label: 'Chittagong City Corporation', value: 'age-chittagong-city' },
       ],
     },
   ]);
 
   // Handle selection
   const handleSelectionChange = (value) => {
+    setSelectedValue(value)
     console.log(value)
   };
 
@@ -115,7 +117,12 @@ export default function Home() {
             </Box>
         
         <Box className="border-l-blue-700 pl-2 border-l h-[90vh] w-3/4  overflow-y-auto flex justify-center items-center">
-          dfda
+            {
+              selectedValue === '' && <Typography variant="h2" className='text-center'>Please select a category first.</Typography>
+            }
+            {
+              selectedValue === 'location-overall-bangladesh' && <LocationOverallInBangladesh/>
+            }
         </Box>
       </Box>
         

@@ -4,7 +4,7 @@ import Papa from 'papaparse';
 import { GoogleMap, LoadScript, Marker,InfoWindow, useJsApiLoader  } from '@react-google-maps/api';
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
 
-export default function MyGoogleMap() {
+export default function LocationOverallInBangladesh() {
     const [locations, setLocations] = useState([]);
     const [googleMaps, setGoogleMaps] = useState(null); // Store the google object
     const mapRef = useRef(null);

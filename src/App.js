@@ -1,7 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Visualization from './components/visualization/Visualization';
 import Home from './components/Home/Home';
 
 function App() {
@@ -9,7 +8,6 @@ function App() {
     <Router basename='/'>
       <Routes>
         <Route path='/' element={<Home/>}/>
-        <Route path='/visualization' element={<Visualization/>}/>
       </Routes>
       <Routes>
 

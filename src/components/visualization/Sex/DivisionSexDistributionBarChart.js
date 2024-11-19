@@ -78,7 +78,7 @@ export default function DivisionSexDistributionBarChart() {
                 callbacks: {
                     label: (tooltipItem) => {
                         const value = tooltipItem.raw;
-                        return `${tooltipItem.dataset.label}: ${value} entries`;
+                        return `${tooltipItem.dataset.label}: ${value}`;
                     },
                 },
             },

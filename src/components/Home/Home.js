@@ -15,6 +15,7 @@ import DivisionWiseBarGraph from '../visualization/Location/DivisionWiseBarGraph
 import DistrictBarGraph from '../visualization/Location/DistrictBarGraph';
 import SexCategoryOveraAllInBangladeshPieChart from '../visualization/Sex/OverallInBangladesh';
 import DivisionSexDistributionBarChart from '../visualization/Sex/DivisionSexDistributionBarChart';
+import ADM3SexDistributionChittagong from '../visualization/Sex/ADM3SexDistributionChittagong';
 export default function Home() {
 
   const [selectedValue, setSelectedValue] = useState('');
@@ -135,6 +136,9 @@ export default function Home() {
             }
             {
               selectedValue === 'sex-division-wise' && <DivisionSexDistributionBarChart/>
+            }
+            {
+              selectedValue === 'sex-chittagong-district' && <ADM3SexDistributionChittagong/>
             }
         </Box>
       </Box>

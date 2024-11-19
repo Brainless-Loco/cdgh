@@ -33,9 +33,9 @@ export default function DistrictBarGraph() {
         labels: districtNames,
         datasets: [
             {
-                label: 'Number of Rows per District',
+                label: 'Number of Patients per District',
                 data: districtNames.map((district) => districtCounts[district] || 0),
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                backgroundColor: 'rgba(75, 192, 192, 0.8)',
                 borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1,
             },
@@ -51,7 +51,7 @@ export default function DistrictBarGraph() {
             },
             tooltip: {
                 callbacks: {
-                    label: (tooltipItem) => `${tooltipItem.raw} Rows`,
+                    label: (tooltipItem) => `${tooltipItem.raw}`,
                 },
             },
         },

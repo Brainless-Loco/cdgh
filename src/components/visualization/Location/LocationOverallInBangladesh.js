@@ -19,7 +19,7 @@ export default function LocationOverallInBangladesh() {
             download: true,
             header: true,
             complete: (result) => {
-                console.log("CSV Data:", result.data); // Log parsed data
+                // console.log("CSV Data:", result.data); // Log parsed data
                 setLocations(result.data);
             },
         });

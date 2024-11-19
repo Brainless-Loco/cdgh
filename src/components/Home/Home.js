@@ -1,19 +1,20 @@
 import React, { useState } from 'react'
 import { Helmet } from 'react-helmet'
-import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Typography,
-  FormControl,
-  Radio,
-  RadioGroup,
-  FormControlLabel,
-  Box,
-} from '@mui/material';
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import LocationOverallInBangladesh from '../visualization/LocationOverallInBangladesh';
-
+import LocationOverallInBangladesh from '../visualization/Location/LocationOverallInBangladesh';
+import DivisionWiseBarGraph from '../visualization/Location/DivisionWiseBarGraph';
+import DistrictBarGraph from '../visualization/Location/DistrictBarGraph';
+import SexCategoryOveraAllInBangladeshPieChart from '../visualization/Sex/OverallInBangladesh';
+import DivisionSexDistributionBarChart from '../visualization/Sex/DivisionSexDistributionBarChart';
 export default function Home() {
 
   const [selectedValue, setSelectedValue] = useState('');
@@ -93,7 +94,7 @@ export default function Home() {
       </Box>
       <Box className="w-full flex h-[90vh] gap-1 px-3">
         
-        <Box className="w-1/4 border-r-blue-700 pr-2 border-r h-[90vh] overflow-y-auto">
+        <Box className="w-1/4 border-r-cyan-700 pr-2 border-r h-[90vh] overflow-y-auto">
             <Typography variant="h5" gutterBottom>
             Visualization Options
           </Typography>
@@ -116,12 +117,24 @@ export default function Home() {
           ))}
             </Box>
         
-        <Box className="border-l-blue-700 pl-2 border-l h-[90vh] w-3/4  overflow-y-auto flex justify-center items-center">
+        <Box className="border-l-cyan-700 pl-2 border-l h-[90vh] w-3/4  overflow-y-auto flex justify-center items-center">
             {
               selectedValue === '' && <Typography variant="h2" className='text-center'>Please select a category first.</Typography>
             }
             {
               selectedValue === 'location-overall-bangladesh' && <LocationOverallInBangladesh/>
+            }
+            {
+              selectedValue === 'location-division' && <DivisionWiseBarGraph/>
+            }
+            {
+              selectedValue === 'location-district' && <DistrictBarGraph/>
+            }
+            {
+              selectedValue === 'sex-overall-bangladesh' && <SexCategoryOveraAllInBangladeshPieChart/>
+            }
+            {
+              selectedValue === 'sex-division-wise' && <DivisionSexDistributionBarChart/>
             }
         </Box>
       </Box>

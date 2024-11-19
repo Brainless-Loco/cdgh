@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { Box } from '@mui/material';
 import Papa from 'papaparse';
-import { GoogleMap, LoadScript, Marker,InfoWindow, useJsApiLoader  } from '@react-google-maps/api';
+import { GoogleMap, LoadScript } from '@react-google-maps/api';
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
 
 export default function LocationOverallInBangladesh() {

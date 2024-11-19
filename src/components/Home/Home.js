@@ -16,6 +16,10 @@ import DistrictBarGraph from '../visualization/Location/DistrictBarGraph';
 import SexCategoryOveraAllInBangladeshPieChart from '../visualization/Sex/OverallInBangladesh';
 import DivisionSexDistributionBarChart from '../visualization/Sex/DivisionSexDistributionBarChart';
 import ADM3SexDistributionChittagong from '../visualization/Sex/ADM3SexDistributionChittagong';
+import MonthlyEntriesLineGraph from '../visualization/Time/MonthlyEntriesLineGraph';
+import WeekdayEntriesLineGraph from '../visualization/Time/WeekdayEntriesLineGraph';
+import AgeCategoryDistributionPieChart from '../visualization/Age/AgeCategoryDistributionPieChart';
+import AgeDistributionByDivisionPieCharts from '../visualization/Age/AgeDistributionByDivisionPieCharts';
 export default function Home() {
 
   const [selectedValue, setSelectedValue] = useState('');
@@ -43,7 +47,7 @@ export default function Home() {
           label: 'Chittagong District (Subdistrict Wise)',
           value: 'sex-chittagong-district',
         },
-        { label: 'Chittagong City Corporation', value: 'sex-chittagong-city' },
+        // { label: 'Chittagong City Corporation', value: 'sex-chittagong-city' },
       ],
     },
     {
@@ -91,7 +95,7 @@ export default function Home() {
             <meta name="description" content="Welcome to the Visualization of CDGH Data by BIKE Lab" />
         </Helmet>
       <Box className="h-[10vh] flex justify-center items-center">
-        <Typography variant='h4' color='blue'>Chattogram Diabetic General Hospital Dashboard</Typography>
+        <Typography variant='h4' className='text-cyan-700'>Chattogram Diabetic General Hospital Dashboard</Typography>
       </Box>
       <Box className="w-full flex h-[90vh] gap-1 px-3">
         
@@ -120,7 +124,7 @@ export default function Home() {
         
         <Box className="border-l-cyan-700 pl-2 border-l h-[90vh] w-3/4  overflow-y-auto flex justify-center items-center">
             {
-              selectedValue === '' && <Typography variant="h2" className='text-center'>Please select a category first.</Typography>
+              selectedValue === '' && <Typography variant="h5" className='text-center'>Please select a category first.</Typography>
             }
             {
               selectedValue === 'location-overall-bangladesh' && <LocationOverallInBangladesh/>
@@ -139,6 +143,18 @@ export default function Home() {
             }
             {
               selectedValue === 'sex-chittagong-district' && <ADM3SexDistributionChittagong/>
+            }
+            {
+              selectedValue === 'time-month' && <MonthlyEntriesLineGraph/>
+            }
+            {
+              selectedValue === 'time-weekday' && <WeekdayEntriesLineGraph/>
+            }
+            {
+              selectedValue === 'age-overall-bangladesh' && <AgeCategoryDistributionPieChart/>
+            }
+            {
+              selectedValue === 'age-division-wise' && <AgeDistributionByDivisionPieCharts/>
             }
         </Box>
       </Box>

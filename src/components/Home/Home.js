@@ -20,6 +20,7 @@ import MonthlyEntriesLineGraph from '../visualization/Time/MonthlyEntriesLineGra
 import WeekdayEntriesLineGraph from '../visualization/Time/WeekdayEntriesLineGraph';
 import AgeCategoryDistributionPieChart from '../visualization/Age/AgeCategoryDistributionPieChart';
 import AgeDistributionByDivisionPieCharts from '../visualization/Age/AgeDistributionByDivisionPieCharts';
+import AgeCategoryLineGraphChittagong from '../visualization/Age/AgeCategoryLineGraphChittagong';
 export default function Home() {
 
   const [selectedValue, setSelectedValue] = useState('');
@@ -155,6 +156,9 @@ export default function Home() {
             }
             {
               selectedValue === 'age-division-wise' && <AgeDistributionByDivisionPieCharts/>
+            }
+            {
+              selectedValue === 'age-chittagong-district' && <AgeCategoryLineGraphChittagong/>
             }
         </Box>
       </Box>

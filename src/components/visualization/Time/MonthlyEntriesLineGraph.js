@@ -98,7 +98,7 @@ export default function MonthlyEntriesLineGraph() {
             tooltip: {
                 callbacks: {
                     label: (tooltipItem) => {
-                        return `${tooltipItem.dataset.label}: ${tooltipItem.raw} entries`;
+                        return `${tooltipItem.dataset.label}: ${tooltipItem.raw}`;
                     },
                 },
             },

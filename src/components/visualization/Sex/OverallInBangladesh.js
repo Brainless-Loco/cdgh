@@ -65,7 +65,7 @@ export default function SexCategoryOverallInBangladeshPieChart() {
                     label: (tooltipItem) => {
                         const value = tooltipItem.raw;
                         const percentage = ((value / totalCount) * 100).toFixed(2); // Calculate percentage
-                        return `${tooltipItem.label}: ${value} entries (${percentage}%)`;
+                        return `${tooltipItem.label}: ${value} (${percentage}%)`;
                     },
                 },
             },

@@ -108,7 +108,7 @@ export default function WeekdayEntriesLineGraph() {
             y: {
                 title: {
                     display: true,
-                    text: 'Number of Entries',
+                    text: 'Number of Patients',
                 },
                 beginAtZero: true,
             },

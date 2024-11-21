@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -91,6 +91,13 @@ export default function Home() {
     ));
   };
 
+  useEffect(() => {
+    setTableRows([])
+    setTableCols([])
+    setSelectedTab(0)
+  }, [selectedValue])
+  
+
   return (
     <Box>
         <Helmet>
@@ -132,7 +139,7 @@ export default function Home() {
                   <Tab label="Others" />
               </Tabs>
               <Box className="h-[90%] w-full">
-                  {selectedTab === 0 && <GraphicalContent selectedValue={selectedValue}/>}
+                  {selectedTab === 0 && <GraphicalContent setTableRows={setTableRows} setTableCols={setTableCols} selectedValue={selectedValue}/>}
                   {selectedTab === 1 && <TabularContent tableRows={tableRows} tableCols={tableCols}/>}
                   {/* {selectedTab === 2 && renderOthersContent()} */}
               </Box>

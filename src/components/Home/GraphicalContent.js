@@ -13,7 +13,7 @@ import SexCategoryOveraAllInBangladeshPieChart from '../visualization/Sex/Overal
 import Typography from '@mui/material/Typography';
 import Box  from '@mui/material/Box'
 
-export default function GraphicalContent({selectedValue}) {
+export default function GraphicalContent({selectedValue, setTableRows, setTableCols}) {
   return (
     <Box className="w-[100%] h-full flex justify-center items-center">
         {
@@ -23,17 +23,17 @@ export default function GraphicalContent({selectedValue}) {
                 </Typography>
             )
         }
-        {selectedValue === 'location-overall-bangladesh' && <LocationOverallInBangladesh />}
-        {selectedValue === 'location-division' && <DivisionWiseBarGraph />}
-        {selectedValue === 'location-district' && <DistrictBarGraph />}
-        {selectedValue === 'sex-overall-bangladesh' && <SexCategoryOveraAllInBangladeshPieChart />}
-        {selectedValue === 'sex-division-wise' && <DivisionSexDistributionBarChart />}
-        {selectedValue === 'sex-chittagong-district' && <ADM3SexDistributionChittagong />}
-        {selectedValue === 'time-month' && <MonthlyEntriesLineGraph />}
-        {selectedValue === 'time-weekday' && <WeekdayEntriesLineGraph />}
-        {selectedValue === 'age-overall-bangladesh' && <AgeCategoryDistributionPieChart />}
-        {selectedValue === 'age-division-wise' && <AgeDistributionByDivisionPieCharts />}
-        {selectedValue === 'age-chittagong-district' && <AgeCategoryLineGraphChittagong />}
+        {selectedValue === 'location-overall-bangladesh' && <LocationOverallInBangladesh setTableRows={setTableRows} setTableCols={setTableCols}/>}
+        {selectedValue === 'location-division' && <DivisionWiseBarGraph setTableRows={setTableRows} setTableCols={setTableCols}/>}
+        {selectedValue === 'location-district' && <DistrictBarGraph setTableRows={setTableRows} setTableCols={setTableCols}/>}
+        {selectedValue === 'sex-overall-bangladesh' && <SexCategoryOveraAllInBangladeshPieChart setTableRows={setTableRows} setTableCols={setTableCols}/>}
+        {selectedValue === 'sex-division-wise' && <DivisionSexDistributionBarChart setTableRows={setTableRows} setTableCols={setTableCols}/>}
+        {selectedValue === 'sex-chittagong-district' && <ADM3SexDistributionChittagong setTableRows={setTableRows} setTableCols={setTableCols}/>}
+        {selectedValue === 'time-month' && <MonthlyEntriesLineGraph setTableRows={setTableRows} setTableCols={setTableCols}/>}
+        {selectedValue === 'time-weekday' && <WeekdayEntriesLineGraph setTableRows={setTableRows} setTableCols={setTableCols}/>}
+        {selectedValue === 'age-overall-bangladesh' && <AgeCategoryDistributionPieChart setTableRows={setTableRows} setTableCols={setTableCols}/>}
+        {selectedValue === 'age-division-wise' && <AgeDistributionByDivisionPieCharts setTableRows={setTableRows} setTableCols={setTableCols}/>}
+        {selectedValue === 'age-chittagong-district' && <AgeCategoryLineGraphChittagong setTableRows={setTableRows} setTableCols={setTableCols}/>}
     </Box>
   )
 }

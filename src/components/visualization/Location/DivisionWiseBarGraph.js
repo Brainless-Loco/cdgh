@@ -17,22 +17,20 @@ import Typography from '@mui/material/Typography';
 // Register necessary Chart.js components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const DivisionWiseBarGraph = () => {
+const DivisionWiseBarGraph = ({setTableRows, setTableCols}) => {
   const [chartData, setChartData] = useState(null);
   const csvFilePath = './finalData.csv';
 
   useEffect(() => {
-    // Parse the CSV and process data
     const fetchData = async () => {
       const response = await fetch(csvFilePath);
       const csvText = await response.text();
-
-      // Parse CSV data
+  
       Papa.parse(csvText, {
         header: true,
         complete: (result) => {
           const data = result.data;
-
+  
           // Count rows for each division
           const divisionCounts = data.reduce((acc, row) => {
             const division = row.ADM1_EN;
@@ -41,7 +39,7 @@ const DivisionWiseBarGraph = () => {
             }
             return acc;
           }, {});
-
+  
           // Prepare data for Chart.js
           setChartData({
             labels: Object.keys(divisionCounts),
@@ -55,12 +53,30 @@ const DivisionWiseBarGraph = () => {
               },
             ],
           });
+  
+          // Prepare data for DataGrid
+          const rows = Object.entries(divisionCounts).map(([division, count], index) => ({
+            id: index + 1,
+            division,
+            count,
+          }));
+  
+          setTableRows(rows);
+  
+          // Dynamic column widths
+          setTableCols([
+            { field: 'id', headerName: 'ID', flex: 0.5, headerClassName: 'custom-header' },
+            { field: 'division', headerName: 'Division', flex: 1, headerClassName: 'custom-header' },
+            { field: 'count', headerName: 'Count', flex: 1, headerClassName: 'custom-header' },
+          ]);
+          
         },
       });
     };
-
+  
     fetchData();
-  }, [csvFilePath]);
+  }, [csvFilePath, setTableRows, setTableCols]);
+  
 
   // Render bar graph
   return (

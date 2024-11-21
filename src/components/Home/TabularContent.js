@@ -5,7 +5,7 @@ import { DataGrid } from '@mui/x-data-grid';
 
 export default function TabularContent({tableRows, tableCols}) {
   return (
-    <Box className="h-[90vh] w-full">
+    <Box className="h-full w-full">
         <Typography variant="h5" className="mb-4">
             Tabular Data
         </Typography>

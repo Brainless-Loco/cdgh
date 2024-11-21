@@ -7,7 +7,7 @@ import Papa from 'papaparse';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export default function AgeDistributionByDivisionPieCharts() {
+export default function AgeDistributionByDivisionPieCharts({setTableRows, setTableCols}) {
     const [divisionData, setDivisionData] = useState({});
 
     useEffect(() => {
@@ -19,9 +19,9 @@ export default function AgeDistributionByDivisionPieCharts() {
                 const divisions = result.data.reduce((acc, row) => {
                     const division = row.ADM1_EN; // Division column
                     const age = parseInt(row.Age, 10);
-
+    
                     if (!division || division === 'Unknown' || isNaN(age)) return acc;
-
+    
                     if (!acc[division]) {
                         acc[division] = {
                             Children: 0,
@@ -31,20 +31,49 @@ export default function AgeDistributionByDivisionPieCharts() {
                             Elderly: 0,
                         };
                     }
-
+    
                     if (age >= 0 && age <= 14) acc[division].Children += 1;
                     else if (age >= 15 && age <= 24) acc[division]['Early Working Age'] += 1;
                     else if (age >= 25 && age <= 54) acc[division]['Prime Working Age'] += 1;
                     else if (age >= 55 && age <= 64) acc[division]['Mature Working Age'] += 1;
                     else if (age >= 65) acc[division].Elderly += 1;
-
+    
                     return acc;
                 }, {});
-
+    
+                // Set division counts to state
                 setDivisionData(divisions);
+    
+                // Prepare table data for each division and age group
+                const tableRows = [];
+                let rowId = 0; // Initialize row counter for unique IDs
+    
+                Object.keys(divisions).forEach((division) => {
+                    const divisionData = divisions[division];
+                    Object.keys(divisionData).forEach((ageGroup) => {
+                        tableRows.push({
+                            id: rowId++, // Unique ID for each row
+                            division: division,
+                            ageGroup: ageGroup,
+                            count: divisionData[ageGroup],
+                        });
+                    });
+                });
+    
+                // Define table columns
+                const tableCols = [
+                    { field: 'division', headerName: 'Division', flex:1},
+                    { field: 'ageGroup', headerName: 'Age Group', flex:1},
+                    { field: 'count', headerName: 'Count', flex:1},
+                ];
+    
+                // Set the table rows and columns to state
+                setTableRows(tableRows);
+                setTableCols(tableCols);
             },
         });
-    }, []);
+    }, [setTableRows, setTableCols]);
+    
 
     const colors = [
         'rgba(75, 192, 192, 0.7)',  // Children

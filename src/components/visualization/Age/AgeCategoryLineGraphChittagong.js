@@ -7,7 +7,7 @@ import Papa from 'papaparse';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
 
-export default function AgeCategoryLineGraphChittagong() {
+export default function AgeCategoryLineGraphChittagong({setTableRows, setTableCols}) {
     const [ageCategoryData, setAgeCategoryData] = useState({});
 
     useEffect(() => {
@@ -16,13 +16,13 @@ export default function AgeCategoryLineGraphChittagong() {
             download: true,
             header: true,
             complete: (result) => {
-                const data = result.data.filter((row) => row.ADM2_EN === 'Chittagong');
+                const data = result.data.filter((row) => row.ADM2_EN === 'Chittagong'); // Filter for Chittagong subdistricts
                 const subdistricts = data.reduce((acc, row) => {
                     const subdistrict = row.ADM3_EN; // Subdistrict column
                     const age = parseInt(row.Age, 10);
-
+    
                     if (!subdistrict || isNaN(age)) return acc;
-
+    
                     if (!acc[subdistrict]) {
                         acc[subdistrict] = {
                             Children: 0,
@@ -32,20 +32,49 @@ export default function AgeCategoryLineGraphChittagong() {
                             Elderly: 0,
                         };
                     }
-
+    
                     if (age >= 0 && age <= 14) acc[subdistrict].Children += 1;
                     else if (age >= 15 && age <= 24) acc[subdistrict]['Early Working Age'] += 1;
                     else if (age >= 25 && age <= 54) acc[subdistrict]['Prime Working Age'] += 1;
                     else if (age >= 55 && age <= 64) acc[subdistrict]['Mature Working Age'] += 1;
                     else if (age >= 65) acc[subdistrict].Elderly += 1;
-
+    
                     return acc;
                 }, {});
-
+    
+                // Set the categorized data for age groups in subdistricts
                 setAgeCategoryData(subdistricts);
+    
+                // Prepare table rows for display
+                const tableRows = [];
+                let rowId = 0; // Counter for unique row ID
+    
+                Object.keys(subdistricts).forEach((subdistrict) => {
+                    const subdistrictData = subdistricts[subdistrict];
+                    Object.keys(subdistrictData).forEach((ageGroup) => {
+                        tableRows.push({
+                            id: rowId++, // Unique row ID
+                            subdistrict: subdistrict,
+                            ageGroup: ageGroup,
+                            count: subdistrictData[ageGroup],
+                        });
+                    });
+                });
+    
+                // Define table columns
+                const tableCols = [
+                    { field: 'subdistrict', headerName: 'Subdistrict', flex:1 },
+                    { field: 'ageGroup', headerName: 'Age Group', flex:1 },
+                    { field: 'count', headerName: 'Count', flex:1 },
+                ];
+    
+                // Set the table rows and columns to state
+                setTableRows(tableRows);
+                setTableCols(tableCols);
             },
         });
-    }, []);
+    }, [setTableRows, setTableCols]);
+    
 
     const labels = Object.keys(ageCategoryData); // Subdistrict names
     const data = {

@@ -7,7 +7,7 @@ import Papa from 'papaparse';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export default function AgeCategoryDistributionPieChart() {
+export default function AgeCategoryDistributionPieChart({setTableRows, setTableCols}) {
     const [ageCounts, setAgeCounts] = useState({
         Children: 0,
         'Early Working Age': 0,
@@ -39,12 +39,36 @@ export default function AgeCategoryDistributionPieChart() {
                     'Mature Working Age': 0,
                     Elderly: 0,
                 });
-
+    
+                // Set age counts to state
                 setAgeCounts(counts);
+    
+                // Prepare data for the table
+                const tableRows = [];
+                let rowId = 0; // Initialize row counter for unique IDs
+    
+                // Loop through the categories and create a row for each
+                Object.keys(counts).forEach((ageGroup) => {
+                    tableRows.push({
+                        id: rowId++, // Unique ID for each row
+                        ageGroup: ageGroup,
+                        count: counts[ageGroup],
+                    });
+                });
+    
+                // Define the columns for the table
+                const tableCols = [
+                    { field: 'ageGroup', headerName: 'Age Group', flex:1 },
+                    { field: 'count', headerName: 'Count', flex:1 },
+                ];
+    
+                // Set the table rows and columns to state
+                setTableRows(tableRows);
+                setTableCols(tableCols);
             },
         });
-    }, []);
-
+    }, [setTableRows, setTableCols]);
+    
     const data = {
         labels: [
             'Children (0-14)',

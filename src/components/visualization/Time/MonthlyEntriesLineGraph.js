@@ -7,7 +7,7 @@ import Papa from 'papaparse';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
 
-export default function MonthlyEntriesLineGraph() {
+export default function MonthlyEntriesLineGraph({setTableRows, setTableCols}) {
     const [monthlyCounts, setMonthlyCounts] = useState({});
 
     useEffect(() => {
@@ -29,7 +29,7 @@ export default function MonthlyEntriesLineGraph() {
                     }
                     return acc;
                 }, {});
-
+    
                 // Sort by year and month
                 const sortedCounts = Object.keys(counts)
                     .sort((a, b) => {
@@ -41,11 +41,32 @@ export default function MonthlyEntriesLineGraph() {
                         acc[key] = counts[key];
                         return acc;
                     }, {});
-
+    
+                // Set the table columns (headers)
+                const tableCols = [
+                    { field: 'month', headerName: 'Month', flex: 1 },
+                    { field: 'total', headerName: 'Total Entries', flex: 1 },
+                    { field: 'male', headerName: 'Male', flex: 1 },
+                    { field: 'female', headerName: 'Female', flex: 1 },
+                ];
+                setTableCols(tableCols);
+    
+                // Set the table rows
+                const tableRows = Object.keys(sortedCounts).map((month) => ({
+                    id: month, // Use month as the ID
+                    month: month, // Format as "MM-YYYY"
+                    total: sortedCounts[month].total,
+                    male: sortedCounts[month].male,
+                    female: sortedCounts[month].female,
+                }));
+                setTableRows(tableRows);
+    
+                // Optionally set monthlyCounts if needed for other purposes
                 setMonthlyCounts(sortedCounts);
             },
         });
-    }, []);
+    }, [setTableRows, setTableCols]);
+    
 
     // Map month numbers to their names
     const monthNames = [

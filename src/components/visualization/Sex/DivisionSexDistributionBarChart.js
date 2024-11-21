@@ -6,7 +6,7 @@ import Papa from 'papaparse';
 
 ChartJS.register(CategoryScale, BarElement, Tooltip, Legend);
 
-export default function DivisionSexDistributionBarChart() {
+export default function DivisionSexDistributionBarChart({setTableRows, setTableCols}) {
     const [divisionData, setDivisionData] = useState([]);
     const [sexCountsByDivision, setSexCountsByDivision] = useState({});
 
@@ -19,31 +19,51 @@ export default function DivisionSexDistributionBarChart() {
                 const counts = result.data.reduce((acc, row) => {
                     const division = row.ADM1_EN;  // Assuming 'Division' is the column for division name
                     const sex = row.Sex;  // 'Sex' column can be 'M', 'F', or 'O'
-
+    
                     if (!division || !sex || sex === 'O' || sex === '') return acc; // Exclude unknown or blank sex values
-                    
+    
                     if (!acc[division]) {
                         acc[division] = { Male: 0, Female: 0 };
                     }
-
+    
                     if (sex === 'M') {
                         acc[division].Male += 1;
                     } else if (sex === 'F') {
                         acc[division].Female += 1;
                     }
-
+    
                     return acc;
                 }, {});
-
+    
                 console.log("Sex counts by division:", counts);  // Debug: check counts per division
                 setSexCountsByDivision(counts);
-
+    
                 // Extract division names for x-axis
                 const divisions = Object.keys(counts);
                 setDivisionData(divisions);
+    
+                // Set rows for DataGrid
+                const rows = divisions
+                .filter((division) => division !== 'Unknown') // Exclude "Unknown"
+                .map((division, index) => ({
+                    id: index + 1,
+                    division: division,
+                    male: counts[division].Male,
+                    female: counts[division].Female,
+                }));
+
+                setTableRows(rows);
+    
+                // Set columns for DataGrid
+                setTableCols([
+                    { field: 'division', headerName: 'Division', flex: 1 },
+                    { field: 'male', headerName: 'Male Count', flex: 1 },
+                    { field: 'female', headerName: 'Female Count', flex: 1 },
+                ]);
             },
         });
-    }, []);
+    }, [setTableRows, setTableCols]);
+    
 
     // Debug: check if division data is available and counts are correct
     useEffect(() => {

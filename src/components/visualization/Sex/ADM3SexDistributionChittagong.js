@@ -7,7 +7,7 @@ import Papa from 'papaparse';
 
 ChartJS.register(CategoryScale, BarElement, Tooltip, Legend);
 
-export default function ADM3SexDistributionChittagong() {
+export default function ADM3SexDistributionChittagong({setTableRows, setTableCols}) {
     const [adm3Data, setAdm3Data] = useState([]);
     const [sexCountsByADM3, setSexCountsByADM3] = useState({});
 
@@ -18,12 +18,12 @@ export default function ADM3SexDistributionChittagong() {
             header: true,
             complete: (result) => {
                 console.log("Parsed CSV data:", result.data); // Debugging
-
+    
                 const counts = result.data.reduce((acc, row) => {
-                    const adm2 = row.ADM2_EN; // Assuming 'ADM2_EN' is the column for the district
-                    const adm3 = row.ADM3_EN; // Assuming 'ADM3_EN' is the column for sub-district
-                    const sex = row.Sex; // Assuming 'Sex' is the column for gender
-
+                    const adm2 = row.ADM2_EN; // District column
+                    const adm3 = row.ADM3_EN; // Subdistrict column
+                    const sex = row.Sex; // Gender column
+    
                     // Filter rows where ADM2_EN is "Chittagong" and ignore invalid data
                     if (adm2 === "Chittagong" && adm3 && sex) {
                         if (!acc[adm3]) {
@@ -37,16 +37,34 @@ export default function ADM3SexDistributionChittagong() {
                     }
                     return acc;
                 }, {});
-
-                console.log("Sex counts by subdistricts (Upazila) in Chittagong:", counts); // Debugging
+    
+                // Set the counts for use elsewhere
                 setSexCountsByADM3(counts);
-
+    
                 // Extract ADM3_EN names for x-axis
                 const adm3Names = Object.keys(counts);
                 setAdm3Data(adm3Names);
+    
+                // Format data for the DataGrid
+                const rows = adm3Names.map((adm3, index) => ({
+                    id: index + 1,
+                    subdistrict: adm3,
+                    male: counts[adm3].Male,
+                    female: counts[adm3].Female,
+                }));
+    
+                const cols = [
+                    { field: 'subdistrict', headerName: 'Sub-District', flex: 1, headerClassName: 'header-bold' },
+                    { field: 'male', headerName: 'Male', flex: 1, headerClassName: 'header-bold' },
+                    { field: 'female', headerName: 'Female', flex: 1, headerClassName: 'header-bold' },
+                ];
+    
+                setTableRows(rows);
+                setTableCols(cols);
             },
         });
-    }, []);
+    }, [setTableRows, setTableCols]);
+    
 
     const data = {
         labels: adm3Data, // ADM3_EN names on the x-axis

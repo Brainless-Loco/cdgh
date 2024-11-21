@@ -6,7 +6,7 @@ import Papa from 'papaparse';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export default function SexCategoryOverallInBangladeshPieChart() {
+export default function SexCategoryOverallInBangladeshPieChart({setTableRows, setTableCols}) {
     const [sexCounts, setSexCounts] = useState({ Male: 0, Female: 0, Others: 0 });
     const [totalCount, setTotalCount] = useState(0);
 
@@ -29,13 +29,26 @@ export default function SexCategoryOverallInBangladeshPieChart() {
                     }
                     return acc;
                 }, { Male: 0, Female: 0, Others: 0 });
-                
+    
                 setSexCounts(counts);
                 setTotalCount(counts.Male + counts.Female + counts.Others); // Calculate total count
+    
+                // Set rows and columns for DataGrid
+                setTableRows([
+                    { id: 1, category: 'Male', count: counts.Male },
+                    { id: 2, category: 'Female', count: counts.Female },
+                    { id: 3, category: 'Others', count: counts.Others },
+                ]);
+    
+                setTableCols([
+                    { field: 'id', headerName: 'ID', flex: 0.5 },
+                    { field: 'category', headerName: 'Category', flex: 1 },
+                    { field: 'count', headerName: 'Count', flex: 1 },
+                ]);
             },
         });
-    }, []);
-
+    }, [setTableRows, setTableCols]);
+    
     // Generate random colors with alpha for the pie segments
     const getRandomColor = () => {
         const r = Math.floor(Math.random() * 256);

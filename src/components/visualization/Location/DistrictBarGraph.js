@@ -6,7 +6,7 @@ import Papa from 'papaparse';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-export default function DistrictBarGraph() {
+export default function DistrictBarGraph({setTableRows, setTableCols}) {
     const [districtCounts, setDistrictCounts] = useState({});
     const [districtNames, setDistrictNames] = useState([]);
     
@@ -23,11 +23,29 @@ export default function DistrictBarGraph() {
                     }
                     return acc;
                 }, {});
+    
+                // Set district counts
                 setDistrictCounts(counts);
                 setDistrictNames(Object.keys(counts));
+    
+                // Dynamically generate rows and columns for DataGrid
+                setTableRows(
+                    Object.entries(counts).map(([district, count], index) => ({
+                        id: index + 1, // Unique ID for each row
+                        district,
+                        count,
+                    }))
+                );
+    
+                setTableCols([
+                    { field: 'id', headerName: 'ID', flex: 0.5 },
+                    { field: 'district', headerName: 'District', flex: 1 },
+                    { field: 'count', headerName: 'Count', flex: 1 },
+                ]);
             },
         });
-    }, []);
+    }, [setTableRows, setTableCols]);
+    
 
     const data = {
         labels: districtNames,

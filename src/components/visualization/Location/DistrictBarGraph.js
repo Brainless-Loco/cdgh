@@ -70,7 +70,7 @@ export default function DistrictBarGraph() {
     };
 
     return (
-        <Box className='w-[90%] h-[70vh] overflow-x-auto'>
+        <Box className='w-full h-full'>
             <Bar data={data} options={options} />
         </Box>
     );

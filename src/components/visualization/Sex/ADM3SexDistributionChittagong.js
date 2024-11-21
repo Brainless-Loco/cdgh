@@ -101,9 +101,12 @@ export default function ADM3SexDistributionChittagong() {
     };
 
     return (
-        <Box className="h-[90%] w-full">
+        <Box className="h-[full] w-full">
             <Typography variant='h5'>Sex Distribution of patients by subdistricts in Chittagong</Typography>
-            <Bar data={data} options={options} />
+            <Box className="h-[90%] w-full flex justify-center items-center">
+                <Bar data={data} options={options} />
+
+            </Box>
         </Box>
     );
 }

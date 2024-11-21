@@ -116,9 +116,11 @@ export default function WeekdayEntriesLineGraph() {
     };
 
     return (
-        <Box className="h-[90%] w-full">
+        <Box className="h-full w-full">
             <Typography variant='h5'>Number of Patients by Weekday</Typography>
-            <Line data={data} options={options} />
+            <Box className="h-[90%] w-full flex justify-center items-center">
+                <Line data={data} options={options} />
+            </Box>
         </Box>
     );
 }

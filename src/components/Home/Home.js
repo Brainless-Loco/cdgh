@@ -10,20 +10,23 @@ import FormControl from '@mui/material/FormControl';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import LocationOverallInBangladesh from '../visualization/Location/LocationOverallInBangladesh';
-import DivisionWiseBarGraph from '../visualization/Location/DivisionWiseBarGraph';
-import DistrictBarGraph from '../visualization/Location/DistrictBarGraph';
-import SexCategoryOveraAllInBangladeshPieChart from '../visualization/Sex/OverallInBangladesh';
-import DivisionSexDistributionBarChart from '../visualization/Sex/DivisionSexDistributionBarChart';
-import ADM3SexDistributionChittagong from '../visualization/Sex/ADM3SexDistributionChittagong';
-import MonthlyEntriesLineGraph from '../visualization/Time/MonthlyEntriesLineGraph';
-import WeekdayEntriesLineGraph from '../visualization/Time/WeekdayEntriesLineGraph';
-import AgeCategoryDistributionPieChart from '../visualization/Age/AgeCategoryDistributionPieChart';
-import AgeDistributionByDivisionPieCharts from '../visualization/Age/AgeDistributionByDivisionPieCharts';
-import AgeCategoryLineGraphChittagong from '../visualization/Age/AgeCategoryLineGraphChittagong';
-export default function Home() {
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import GraphicalContent from './GraphicalContent';
+import TabularContent from './TabularContent';
 
+
+export default function Home() {
+  const [selectedTab, setSelectedTab] = useState(0);
   const [selectedValue, setSelectedValue] = useState('');
+  
+  const [tableRows, setTableRows] = useState([]);
+  const [tableCols, setTableCols] = useState([]);
+
+  const handleTabChange = (event, newValue) => {
+      setSelectedTab(newValue);
+  };
+
 
   const [options] = useState([
     {
@@ -72,7 +75,6 @@ export default function Home() {
   // Handle selection
   const handleSelectionChange = (value) => {
     setSelectedValue(value)
-    console.log(value)
   };
 
   // Recursive renderer for nested levels
@@ -123,43 +125,17 @@ export default function Home() {
           ))}
             </Box>
         
-        <Box className="border-l-cyan-700 pl-2 border-l h-[90vh] w-3/4  overflow-y-auto flex justify-center items-center">
-            {
-              selectedValue === '' && <Typography variant="h5" className='text-center'>Please select a category first.</Typography>
-            }
-            {
-              selectedValue === 'location-overall-bangladesh' && <LocationOverallInBangladesh/>
-            }
-            {
-              selectedValue === 'location-division' && <DivisionWiseBarGraph/>
-            }
-            {
-              selectedValue === 'location-district' && <DistrictBarGraph/>
-            }
-            {
-              selectedValue === 'sex-overall-bangladesh' && <SexCategoryOveraAllInBangladeshPieChart/>
-            }
-            {
-              selectedValue === 'sex-division-wise' && <DivisionSexDistributionBarChart/>
-            }
-            {
-              selectedValue === 'sex-chittagong-district' && <ADM3SexDistributionChittagong/>
-            }
-            {
-              selectedValue === 'time-month' && <MonthlyEntriesLineGraph/>
-            }
-            {
-              selectedValue === 'time-weekday' && <WeekdayEntriesLineGraph/>
-            }
-            {
-              selectedValue === 'age-overall-bangladesh' && <AgeCategoryDistributionPieChart/>
-            }
-            {
-              selectedValue === 'age-division-wise' && <AgeDistributionByDivisionPieCharts/>
-            }
-            {
-              selectedValue === 'age-chittagong-district' && <AgeCategoryLineGraphChittagong/>
-            }
+            <Box className="border-l-cyan-700 pl-2 border-l h-[90vh] w-full overflow-y-auto">
+              <Tabs value={selectedTab} onChange={handleTabChange} aria-label="Main Tabs">
+                  <Tab label="Graphical" />
+                  <Tab label="Tabular" />
+                  <Tab label="Others" />
+              </Tabs>
+              <Box className="h-[90%] w-full">
+                  {selectedTab === 0 && <GraphicalContent selectedValue={selectedValue}/>}
+                  {selectedTab === 1 && <TabularContent tableRows={tableRows} tableCols={tableCols}/>}
+                  {/* {selectedTab === 2 && renderOthersContent()} */}
+              </Box>
         </Box>
       </Box>
         

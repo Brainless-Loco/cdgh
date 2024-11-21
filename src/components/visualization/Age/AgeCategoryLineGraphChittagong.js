@@ -126,9 +126,11 @@ export default function AgeCategoryLineGraphChittagong() {
     };
 
     return (
-        <Box className="h-[90%] w-full">
+        <Box className="h-full w-full">
             <Typography variant="h5">Age Distribution by Subdistrict (Chittagong District)</Typography>
-            <Line data={data} options={options} />
+            <Box className="h-[90%] w-full overflow-hidden flex justify-center">
+                <Line data={data} options={options} />
+            </Box>
         </Box>
     );
 }

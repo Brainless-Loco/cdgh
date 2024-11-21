@@ -64,8 +64,7 @@ const DivisionWiseBarGraph = () => {
 
   // Render bar graph
   return (
-    <Box style={{ width: '90%', margin: '0 auto', height:'70vh',overflowX:'auto' }}>
-      <h2>Division-Wise Count</h2>
+    <Box className="w-full m-0 h-full overflow-x-auto">
       {chartData ? (
         <Bar
           data={chartData}

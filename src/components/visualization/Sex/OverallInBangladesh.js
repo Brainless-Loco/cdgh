@@ -76,9 +76,11 @@ export default function SexCategoryOverallInBangladeshPieChart() {
     };
 
     return (
-        <Box>
-            <h2>Overall Sex Distribution of Patients in Bangladesh</h2>
-            <Pie data={data} options={options} />
+        <Box className="h-full w-full">
+            <h1 className='text-center'>Overall Sex Distribution of Patients in Bangladesh</h1>
+            <Box className="h-[90%] w-full overflow-hidden flex justify-center">
+                <Pie data={data} options={options} />   
+            </Box>
         </Box>
     );
 }

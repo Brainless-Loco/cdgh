@@ -10,7 +10,7 @@ export default function LocationOverallInBangladesh() {
     const mapRef = useRef(null);
     const markerClustererRef = useRef(null);
 
-    const mapStyles = { height: "86vh", width: "95vw" };
+    const mapStyles = { height: "80vh", width: "75vw" };
     const defaultCenter = { lat: 23.685, lng: 90.3563 }; // Center of Bangladesh
 
     useEffect(() => {
@@ -60,14 +60,17 @@ export default function LocationOverallInBangladesh() {
     }, [googleMaps, locations]);
 
     return (
-        <Box>
+        <Box className="h-full w-90%">
             <LoadScript googleMapsApiKey="AIzaSyDYUDVcyIfjP-xMid-UAfMcwlqOBeii__I">
-                <GoogleMap
-                    mapContainerStyle={mapStyles}
-                    zoom={7}
-                    center={defaultCenter}
-                    onLoad={(map) => onMapLoad(map, window.google)} // Pass map and google object
-                />
+                <Box className="w-full h-full">
+                    <GoogleMap
+                        mapContainerStyle={mapStyles}
+                        zoom={7}
+                        center={defaultCenter}
+                        onLoad={(map) => onMapLoad(map, window.google)} // Pass map and google object
+                    />
+                </Box>
+                
             </LoadScript>
         </Box>
     );

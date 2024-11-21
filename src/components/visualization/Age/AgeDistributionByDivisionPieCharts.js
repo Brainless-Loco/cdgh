@@ -94,19 +94,21 @@ export default function AgeDistributionByDivisionPieCharts() {
             };
 
             return (
-                <Box key={division} className="w-[40%] h-[70vh]">
+                <Box key={division} className="w-[45%] m-1 mb-8 h-[65vh]">
                     <Typography variant="h6" textAlign="center">
                         {division}
                     </Typography>
-                    <Pie data={data} options={options} />
+                    <Box className="h-[90%] w-full flex justify-center items-center">
+                        <Pie data={data} options={options} />
+                    </Box>
                 </Box>
             );
         });
     };
 
     return (
-        <Box className='w-full h-full border-red-100 border py-8'>
-            <Box className="w-full flex justify-center flex-row flex-wrap overflow-auto">
+        <Box className='w-full overflow-auto h-full py-1'>
+            <Box className="w-full flex justify-center flex-row flex-wrap">
 
                 {renderPieCharts()}
             </Box>

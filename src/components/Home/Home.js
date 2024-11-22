@@ -15,6 +15,7 @@ import Tab from '@mui/material/Tab';
 import GraphicalContent from './GraphicalContent';
 import TabularContent from './TabularContent';
 import MapContent from './MapContent';
+import Button from '@mui/material/Button';
 
 
 export default function Home() {
@@ -78,17 +79,28 @@ export default function Home() {
     setSelectedValue(value)
   };
 
+  // Handle selection
+  const handleButtonClick = (value) => {
+    setSelectedValue(value);
+  };
+
   // Recursive renderer for nested levels
   const renderOptions = (levels, parentIndent = 0) => {
     return levels.map((level) => (
-      <div key={level.value} style={{ marginLeft: parentIndent * 20 }}>
-        <FormControlLabel
-          value={level.value}
-          control={<Radio />}
-          label={level.label}
-        />
-        {level.children && renderOptions(level.children, parentIndent + 1)}
-      </div>
+      <Button
+        key={level.value}
+        variant={selectedValue === level.value ? 'contained' : 'outlined'}
+        onClick={() => handleButtonClick(level.value)}
+        sx={{
+          margin: '4px',
+          minWidth: '200px',
+          display: 'block',
+          textAlign: 'left',
+          fontWeight:'bold'
+        }}
+      >
+        {level.label}
+      </Button>
     ));
   };
 
@@ -105,9 +117,29 @@ export default function Home() {
             <title>CDGH | BIKE Lab</title>
             <meta name="description" content="Welcome to the Visualization of CDGH Data by BIKE Lab" />
         </Helmet>
-      <Box className="h-[10vh] flex justify-center items-center">
-        <Typography variant='h4' className='text-cyan-700'>Chattogram Diabetic General Hospital Dashboard</Typography>
-      </Box>
+        <Box
+            className="h-[10vh] flex justify-center items-center"
+            sx={{
+              position: 'relative',
+              backgroundColor: 'white', // Optional: Background color
+              boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)', // Optional: Subtle shadow
+              '::after': {
+                content: '""',
+                position: 'absolute',
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: '40px', // Adjust to control the fog effect height
+                background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1))',
+                pointerEvents: 'none', // Ensures it doesn’t block clicks
+              },
+            }}
+          >
+            <Typography variant="h4" className="text-cyan-700">
+              Chattogram Diabetic General Hospital Dashboard
+            </Typography>
+          </Box>
+
       <Box className="w-full flex h-[90vh] gap-1 px-3">
         
         <Box className="w-1/4 border-r-cyan-700 pr-2 border-r h-[90vh] overflow-y-auto">

@@ -14,6 +14,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import GraphicalContent from './GraphicalContent';
 import TabularContent from './TabularContent';
+import MapContent from './MapContent';
 
 
 export default function Home() {
@@ -136,12 +137,12 @@ export default function Home() {
               <Tabs value={selectedTab} onChange={handleTabChange} aria-label="Main Tabs">
                   <Tab label="Graphical" />
                   <Tab label="Tabular" />
-                  <Tab label="Others" />
+                  <Tab label="Map" />
               </Tabs>
               <Box className="h-[90%] w-full">
                   {selectedTab === 0 && <GraphicalContent setTableRows={setTableRows} setTableCols={setTableCols} selectedValue={selectedValue}/>}
                   {selectedTab === 1 && <TabularContent tableRows={tableRows} tableCols={tableCols}/>}
-                  {/* {selectedTab === 2 && renderOthersContent()} */}
+                  {selectedTab === 2 && <MapContent selectedValue={selectedValue}/>}
               </Box>
         </Box>
       </Box>

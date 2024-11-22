@@ -12,6 +12,7 @@ import AgeCategoryLineGraphChittagong from '../visualization/Age/AgeCategoryLine
 import SexCategoryOveraAllInBangladeshPieChart from '../visualization/Sex/OverallInBangladesh';
 import Typography from '@mui/material/Typography';
 import Box  from '@mui/material/Box'
+import ADM3TotalCountsChittagong from '../visualization/Location/ADM3TotalCountsChittagong'
 
 export default function GraphicalContent({selectedValue, setTableRows, setTableCols}) {
   return (
@@ -23,14 +24,22 @@ export default function GraphicalContent({selectedValue, setTableRows, setTableC
                 </Typography>
             )
         }
+        {/* Location */}
         {selectedValue === 'location-overall-bangladesh' && <LocationOverallInBangladesh setTableRows={setTableRows} setTableCols={setTableCols}/>}
         {selectedValue === 'location-division' && <DivisionWiseBarGraph setTableRows={setTableRows} setTableCols={setTableCols}/>}
         {selectedValue === 'location-district' && <DistrictBarGraph setTableRows={setTableRows} setTableCols={setTableCols}/>}
+        {selectedValue === 'location-chittagong-district' && <ADM3TotalCountsChittagong  setTableRows={setTableRows} setTableCols={setTableCols}/> }
+
+        {/* Sex */}
         {selectedValue === 'sex-overall-bangladesh' && <SexCategoryOveraAllInBangladeshPieChart setTableRows={setTableRows} setTableCols={setTableCols}/>}
         {selectedValue === 'sex-division-wise' && <DivisionSexDistributionBarChart setTableRows={setTableRows} setTableCols={setTableCols}/>}
         {selectedValue === 'sex-chittagong-district' && <ADM3SexDistributionChittagong setTableRows={setTableRows} setTableCols={setTableCols}/>}
+
+        {/* Tme */}
         {selectedValue === 'time-month' && <MonthlyEntriesLineGraph setTableRows={setTableRows} setTableCols={setTableCols}/>}
         {selectedValue === 'time-weekday' && <WeekdayEntriesLineGraph setTableRows={setTableRows} setTableCols={setTableCols}/>}
+
+        {/* Age */}
         {selectedValue === 'age-overall-bangladesh' && <AgeCategoryDistributionPieChart setTableRows={setTableRows} setTableCols={setTableCols}/>}
         {selectedValue === 'age-division-wise' && <AgeDistributionByDivisionPieCharts setTableRows={setTableRows} setTableCols={setTableCols}/>}
         {selectedValue === 'age-chittagong-district' && <AgeCategoryLineGraphChittagong setTableRows={setTableRows} setTableCols={setTableCols}/>}

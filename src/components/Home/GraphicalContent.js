@@ -13,6 +13,9 @@ import SexCategoryOveraAllInBangladeshPieChart from '../visualization/Sex/Overal
 import Typography from '@mui/material/Typography';
 import Box  from '@mui/material/Box'
 import ADM3TotalCountsChittagong from '../visualization/Location/ADM3TotalCountsChittagong'
+import BMIBarGraph from '../visualization/Physical_Matrics/BMIBarGraph'
+import HeightBarGraph from '../visualization/Physical_Matrics/HeightBarGraph'
+import WeightBarGraph from '../visualization/Physical_Matrics/WeightBarGraph'
 
 export default function GraphicalContent({selectedValue, setTableRows, setTableCols}) {
   return (
@@ -43,6 +46,11 @@ export default function GraphicalContent({selectedValue, setTableRows, setTableC
         {selectedValue === 'age-overall-bangladesh' && <AgeCategoryDistributionPieChart setTableRows={setTableRows} setTableCols={setTableCols}/>}
         {selectedValue === 'age-division-wise' && <AgeDistributionByDivisionPieCharts setTableRows={setTableRows} setTableCols={setTableCols}/>}
         {selectedValue === 'age-chittagong-district' && <AgeCategoryLineGraphChittagong setTableRows={setTableRows} setTableCols={setTableCols}/>}
+
+        {/* Physical Metrics */}
+        {selectedValue === 'physical-bmi-distribution' && <BMIBarGraph setTableRows={setTableRows} setTableCols={setTableCols}/> }
+        {selectedValue === 'physical-height-range' && <HeightBarGraph setTableRows={setTableRows} setTableCols={setTableCols}/> }
+        {selectedValue === 'physical-weight-range' && <WeightBarGraph setTableRows={setTableRows} setTableCols={setTableCols}/> }
     </Box>
   )
 }

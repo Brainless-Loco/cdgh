@@ -72,6 +72,14 @@ export default function Home() {
         { label: 'Chittagong City Corporation', value: 'age-chittagong-city' },
       ],
     },
+    {
+      category: 'Physical Metrics',
+      levels: [
+        { label: 'BMI Distribution', value: 'physical-bmi-distribution' },
+        { label: 'Height Range', value: 'physical-height-range' },
+        { label: 'Weight Range', value: 'physical-weight-range' },
+      ],
+    },
   ]);
 
   // Handle selection

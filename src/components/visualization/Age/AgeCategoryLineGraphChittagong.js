@@ -25,19 +25,17 @@ export default function AgeCategoryLineGraphChittagong({setTableRows, setTableCo
     
                     if (!acc[subdistrict]) {
                         acc[subdistrict] = {
-                            Children: 0,
-                            'Early Working Age': 0,
-                            'Prime Working Age': 0,
-                            'Mature Working Age': 0,
+                            'Non-Adults': 0,
+                            'Adults': 0,
+                            'Mature Working Aged': 0,
                             Elderly: 0,
                         };
                     }
     
-                    if (age >= 0 && age <= 14) acc[subdistrict].Children += 1;
-                    else if (age >= 15 && age <= 24) acc[subdistrict]['Early Working Age'] += 1;
-                    else if (age >= 25 && age <= 54) acc[subdistrict]['Prime Working Age'] += 1;
-                    else if (age >= 55 && age <= 64) acc[subdistrict]['Mature Working Age'] += 1;
-                    else if (age >= 65) acc[subdistrict].Elderly += 1;
+                    if (age >= 0 && age < 18) acc[subdistrict]["Non-Adults"] += 1;
+                    else if (age >= 18 && age <= 40) acc[subdistrict]['Adults'] += 1;
+                    else if (age >= 41 && age <= 60) acc[subdistrict]['Mature Working Aged'] += 1;
+                    else if (age >= 60) acc[subdistrict].Elderly += 1;
     
                     return acc;
                 }, {});
@@ -81,39 +79,31 @@ export default function AgeCategoryLineGraphChittagong({setTableRows, setTableCo
         labels,
         datasets: [
             {
-                label: 'Children (0-14)',
-                data: labels.map((subdistrict) => ageCategoryData[subdistrict]?.Children || 0),
+                label: 'Non-Adults (0-18)',
+                data: labels.map((subdistrict) => ageCategoryData[subdistrict]?.['Non-Adults'] || 0),
                 borderColor: 'rgba(75, 192, 192, 1)',
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
                 tension: 0, // Straight lines
                 fill: false,
             },
             {
-                label: 'Early Working Age (15-24)',
-                data: labels.map((subdistrict) => ageCategoryData[subdistrict]?.['Early Working Age'] || 0),
+                label: 'Adults (18-40)',
+                data: labels.map((subdistrict) => ageCategoryData[subdistrict]?.['Adults'] || 0),
                 borderColor: 'rgba(54, 162, 235, 1)',
                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
                 tension: 0, // Straight lines
                 fill: false,
             },
             {
-                label: 'Prime Working Age (25-54)',
-                data: labels.map((subdistrict) => ageCategoryData[subdistrict]?.['Prime Working Age'] || 0),
-                borderColor: 'rgba(255, 206, 86, 1)',
-                backgroundColor: 'rgba(255, 206, 86, 0.2)',
-                tension: 0, // Straight lines
-                fill: false,
-            },
-            {
-                label: 'Mature Working Age (55-64)',
-                data: labels.map((subdistrict) => ageCategoryData[subdistrict]?.['Mature Working Age'] || 0),
+                label: 'Mature Working Aged (41-60)',
+                data: labels.map((subdistrict) => ageCategoryData[subdistrict]?.['Mature Working Aged'] || 0),
                 borderColor: 'rgba(153, 102, 255, 1)',
                 backgroundColor: 'rgba(153, 102, 255, 0.2)',
                 tension: 0, // Straight lines
                 fill: false,
             },
             {
-                label: 'Elderly (65+)',
+                label: 'Elderly (60+)',
                 data: labels.map((subdistrict) => ageCategoryData[subdistrict]?.Elderly || 0),
                 borderColor: 'rgba(255, 99, 132, 1)',
                 backgroundColor: 'rgba(255, 99, 132, 0.2)',
@@ -141,7 +131,7 @@ export default function AgeCategoryLineGraphChittagong({setTableRows, setTableCo
             x: {
                 title: {
                     display: true,
-                    text: 'Subdistricts (ADM3)',
+                    text: 'Subdistricts',
                 },
             },
             y: {

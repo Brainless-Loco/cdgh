@@ -24,19 +24,17 @@ export default function AgeDistributionByDivisionPieCharts({setTableRows, setTab
     
                     if (!acc[division]) {
                         acc[division] = {
-                            Children: 0,
-                            'Early Working Age': 0,
-                            'Prime Working Age': 0,
-                            'Mature Working Age': 0,
+                            'Non-Adults': 0,
+                            'Adults': 0,
+                            'Mature Working Aged': 0,
                             Elderly: 0,
                         };
                     }
     
-                    if (age >= 0 && age <= 14) acc[division].Children += 1;
-                    else if (age >= 15 && age <= 24) acc[division]['Early Working Age'] += 1;
-                    else if (age >= 25 && age <= 54) acc[division]['Prime Working Age'] += 1;
-                    else if (age >= 55 && age <= 64) acc[division]['Mature Working Age'] += 1;
-                    else if (age >= 65) acc[division].Elderly += 1;
+                    if (age >= 0 && age < 18) acc[division]["Non-Adults"] += 1;
+                    else if (age >= 18 && age <= 40) acc[division]['Adults'] += 1;
+                    else if (age >= 41 && age <= 60) acc[division]['Mature Working Aged'] += 1;
+                    else if (age >= 61) acc[division].Elderly += 1;
     
                     return acc;
                 }, {});
@@ -76,10 +74,9 @@ export default function AgeDistributionByDivisionPieCharts({setTableRows, setTab
     
 
     const colors = [
-        'rgba(75, 192, 192, 0.7)',  // Children
-        'rgba(54, 162, 235, 0.7)',  // Early Working Age
-        'rgba(255, 206, 86, 0.7)',  // Prime Working Age
-        'rgba(153, 102, 255, 0.7)', // Mature Working Age
+        'rgba(75, 192, 192, 0.7)',  // Non-Adults
+        'rgba(54, 162, 235, 0.7)',  // Adults
+        'rgba(153, 102, 255, 0.7)', // Mature Working Aged
         'rgba(255, 99, 132, 0.7)',  // Elderly
     ];
 
@@ -87,11 +84,10 @@ export default function AgeDistributionByDivisionPieCharts({setTableRows, setTab
         return Object.keys(divisionData).map((division) => {
             const data = {
                 labels: [
-                    'Children (0-14)',
-                    'Early Working Age (15-24)',
-                    'Prime Working Age (25-54)',
-                    'Mature Working Age (55-64)',
-                    'Elderly (65+)',
+                    'Non-Adults (0-18)',
+                    'Adults (18-40)',
+                    'Mature Working Aged (41-60)',
+                    'Elderly (60+)',
                 ],
                 datasets: [
                     {

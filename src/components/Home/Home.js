@@ -1,30 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
-import Accordion from '@mui/material/Accordion';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControl from '@mui/material/FormControl';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import GraphicalContent from './GraphicalContent';
 import TabularContent from './TabularContent';
 import MapContent from './MapContent';
 import Button from '@mui/material/Button';
+import CustomAccordion from './VisualizingOptions/CustomAccordion';
 
 
 export default function Home() {
   const [selectedTab, setSelectedTab] = useState(0);
   const [selectedValue, setSelectedValue] = useState('');
-  
+
   const [tableRows, setTableRows] = useState([]);
   const [tableCols, setTableCols] = useState([]);
 
   const handleTabChange = (event, newValue) => {
-      setSelectedTab(newValue);
+    setSelectedTab(newValue);
   };
 
 
@@ -102,7 +97,7 @@ export default function Home() {
           minWidth: '200px',
           display: 'block',
           textAlign: 'left',
-          fontWeight:'bold'
+          fontWeight: 'bold'
         }}
       >
         {level.label}
@@ -115,76 +110,52 @@ export default function Home() {
     setTableCols([])
     setSelectedTab(0)
   }, [selectedValue])
-  
+
 
   return (
     <Box>
-        <Helmet>
-            <title>CDGH | BIKE Lab</title>
-            <meta name="description" content="Welcome to the Visualization of CDGH Data by BIKE Lab" />
-        </Helmet>
-        <Box
-            className="h-[10vh] flex justify-center items-center"
-            sx={{
-              position: 'relative',
-              backgroundColor: 'white', // Optional: Background color
-              boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)', // Optional: Subtle shadow
-              '::after': {
-                content: '""',
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                right: 0,
-                height: '40px', // Adjust to control the fog effect height
-                background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1))',
-                pointerEvents: 'none', // Ensures it doesn’t block clicks
-              },
-            }}
-          >
-            <Typography variant="h4" className="text-cyan-700">
-              Chattogram Diabetic General Hospital Dashboard
-            </Typography>
-          </Box>
+      <Helmet>
+        <title>CDGH | BIKE Lab</title>
+        <meta name="description" content="Welcome to the Visualization of CDGH Data by BIKE Lab" />
+      </Helmet>
+      <Box
+        className="h-[10vh] flex justify-center items-center"
+        sx={{ backgroundColor: '#0a1b4a', }}>
+        <Typography variant="h4" className="text-cyan-300" sx={{ fontFamily: 'monospace' }}>
+          Chattogram Diabetic General Hospital Dashboard
+        </Typography>
+      </Box>
 
-      <Box className="w-full flex h-[90vh] gap-1 px-3">
-        
-        <Box className="w-1/4 border-r-cyan-700 pr-2 border-r h-[90vh] overflow-y-auto">
-            <Typography variant="h5" gutterBottom>
-            Visualization Options
-          </Typography>
+      <Box className="w-full flex h-[90vh] justify-between">
+
+        <Box sx={{ bgcolor: '#07021a' }} className="flex  flex-col items-center flex-nowrap w-1/4 pt-4 pb-4 h-[90vh] overflow-y-auto">
+          {/* <Typography variant="h4" gutterBottom>
+            Visualize
+          </Typography> */}
           {options.map((option) => (
-            <Accordion key={option.category}>
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography>{option.category}</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <FormControl>
-                  <RadioGroup
-                    name={option.category}
-                    onChange={(e) => handleSelectionChange(e.target.value)}
-                  >
-                    {renderOptions(option.levels)}
-                  </RadioGroup>
-                </FormControl>
-              </AccordionDetails>
-            </Accordion>
+            <CustomAccordion option={option} handleSelectionChange={handleSelectionChange} renderOptions={renderOptions} />
           ))}
-            </Box>
-        
-            <Box className="border-l-cyan-700 pl-2 border-l h-[90vh] w-full overflow-y-auto">
-              <Tabs value={selectedTab} onChange={handleTabChange} aria-label="Main Tabs">
-                  <Tab label="Graphical" />
-                  <Tab label="Tabular" />
-                  <Tab label="Map" />
-              </Tabs>
-              <Box className="h-[90%] w-full">
-                  {selectedTab === 0 && <GraphicalContent setTableRows={setTableRows} setTableCols={setTableCols} selectedValue={selectedValue}/>}
-                  {selectedTab === 1 && <TabularContent tableRows={tableRows} tableCols={tableCols}/>}
-                  {selectedTab === 2 && <MapContent selectedValue={selectedValue}/>}
-              </Box>
+        </Box>
+
+        <Box className="px-1 h-[90vh] w-full overflow-y-auto">
+          <Tabs className='pt-1' value={selectedTab} onChange={handleTabChange} aria-label="Main Tabs">
+            {
+              ["Graphical", "Tabular", "Map"].map((tab, id) => {
+                return <Tab sx={{
+                  backgroundColor: id === selectedTab ? "#111a40" : 'white',
+                }}
+                  key={id} label={tab} />
+              })
+            }
+          </Tabs>
+          <Box className="h-[90%] w-full border" sx={{ borderColor: '#0c1021' }}>
+            {selectedTab === 0 && <GraphicalContent setTableRows={setTableRows} setTableCols={setTableCols} selectedValue={selectedValue} />}
+            {selectedTab === 1 && <TabularContent tableRows={tableRows} tableCols={tableCols} />}
+            {selectedTab === 2 && <MapContent selectedValue={selectedValue} />}
+          </Box>
         </Box>
       </Box>
-        
+
     </Box>
   )
 }

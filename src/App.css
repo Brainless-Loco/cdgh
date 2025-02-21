@@ -7,6 +7,15 @@
   pointer-events: none;
 }
 
+/* Scrollbar with less height and floating */
+
+::-webkit-scrollbar {
+  width: 6px;
+  background-color: #282c3463;
+  display: none;
+}
+
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

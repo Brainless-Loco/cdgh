@@ -19,7 +19,7 @@ export default function WeekdayEntriesLineGraph({setTableRows, setTableCols}) {
     });
 
     useEffect(() => {
-        Papa.parse('/finalData.csv', {
+        Papa.parse('/finalData2.csv', {
             download: true,
             header: true,
             complete: (result) => {
@@ -108,24 +108,24 @@ export default function WeekdayEntriesLineGraph({setTableRows, setTableCols}) {
             {
                 label: 'Total',
                 data: totalData,
-                borderColor: 'rgba(75, 192, 192, 1)',
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'green',
+                backgroundColor: 'green',
                 tension: 0.1,
                 fill: true,
             },
             {
                 label: 'Male',
                 data: maleData,
-                borderColor: 'rgba(54, 162, 235, 1)',
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'blue',
+                backgroundColor: 'blue',
                 tension: 0.1,
                 fill: false,
             },
             {
                 label: 'Female',
                 data: femaleData,
-                borderColor: 'rgba(255, 99, 132, 1)',
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'red',
+                backgroundColor: 'red',
                 tension: 0.1,
                 fill: false,
             },

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, BarElement, Tooltip, Legend } from 'chart.js';
 import Papa from 'papaparse';
@@ -72,15 +71,15 @@ export default function ADM3SexDistributionChittagong({setTableRows, setTableCol
             {
                 label: 'Male',
                 data: adm3Data.map(adm3 => sexCountsByADM3[adm3]?.Male || 0), // Male count for each ADM3_EN
-                backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                borderColor: 'rgba(54, 162, 235, 1)',
+                backgroundColor: 'blue',
+                borderColor: 'blue',
                 borderWidth: 1,
             },
             {
                 label: 'Female',
                 data: adm3Data.map(adm3 => sexCountsByADM3[adm3]?.Female || 0), // Female count for each ADM3_EN
-                backgroundColor: 'rgba(255, 99, 132, 0.6)',
-                borderColor: 'rgba(255, 99, 132, 1)',
+                backgroundColor: 'red',
+                borderColor: 'red',
                 borderWidth: 1,
             },
         ],
@@ -119,9 +118,9 @@ export default function ADM3SexDistributionChittagong({setTableRows, setTableCol
     };
 
     return (
-        <Box className="h-[full] w-full">
-            <Typography variant='h5'>Sex Distribution of patients by subdistricts in Chittagong</Typography>
-            <Box className="h-[90%] w-full flex justify-center items-center">
+        <Box className="h-[98%] w-full overflow-auto">
+            <h2>Division-wise Sex Distribution (Male vs Female)</h2>
+            <Box className="h-full w-full flex justify-center items-center">
                 <Bar data={data} options={options} />
 
             </Box>

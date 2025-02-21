@@ -48,22 +48,14 @@ export default function SexCategoryOverallInBangladeshPieChart({setTableRows, se
             },
         });
     }, [setTableRows, setTableCols]);
-    
-    // Generate random colors with alpha for the pie segments
-    const getRandomColor = () => {
-        const r = Math.floor(Math.random() * 256);
-        const g = Math.floor(Math.random() * 256);
-        const b = Math.floor(Math.random() * 256);
-        const alpha = 0.7 + Math.random() * 0.3; // Random alpha between 0.7 and 1
-        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-    };
+
 
     const data = {
         labels: ['Male', 'Female', 'Others'],
         datasets: [
             {
                 data: [sexCounts.Male, sexCounts.Female, sexCounts.Others],
-                backgroundColor: [getRandomColor(), getRandomColor(), getRandomColor()],
+                backgroundColor: ["#2200ff", "#ff0000", '#f6ff00'],
                 borderColor: ['#fff', '#fff', '#fff'],
                 borderWidth: 1,
             },

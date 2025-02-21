@@ -77,15 +77,15 @@ export default function DivisionSexDistributionBarChart({setTableRows, setTableC
             {
                 label: 'Male',
                 data: divisionData.map(division => sexCountsByDivision[division]?.Male || 0),  // Male count for each division
-                backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                borderColor: 'rgba(54, 162, 235, 1)',
+                backgroundColor: 'red',
+                borderColor: 'red',
                 borderWidth: 1,
             },
             {
                 label: 'Female',
                 data: divisionData.map(division => sexCountsByDivision[division]?.Female || 0),  // Female count for each division
-                backgroundColor: 'rgba(255, 99, 132, 0.6)',
-                borderColor: 'rgba(255, 99, 132, 1)',
+                backgroundColor: 'blue',
+                borderColor: 'blue',
                 borderWidth: 1,
             },
         ],

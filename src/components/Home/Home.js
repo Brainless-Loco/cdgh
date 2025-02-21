@@ -142,13 +142,18 @@ export default function Home() {
             {
               ["Graphical", "Tabular", "Map"].map((tab, id) => {
                 return <Tab sx={{
-                  backgroundColor: id === selectedTab ? "#111a40" : 'white',
+                  border:id === selectedTab ? "2px solid #111a40" : '2px solid transparent',
+                  borderWidth:'3px',
+                  borderBottom:'none',
+                  borderBottomLeftRadius:'0px',
+                  borderBottomRightRadius:'0px',
+                  borderRadius:'8px'
                 }}
                   key={id} label={tab} />
               })
             }
           </Tabs>
-          <Box className="h-[90%] w-full border" sx={{ borderColor: '#0c1021' }}>
+          <Box className="h-[90%] w-full border overflow-auto" sx={{ borderColor: '#0c1021' }}>
             {selectedTab === 0 && <GraphicalContent setTableRows={setTableRows} setTableCols={setTableCols} selectedValue={selectedValue} />}
             {selectedTab === 1 && <TabularContent tableRows={tableRows} tableCols={tableCols} />}
             {selectedTab === 2 && <MapContent selectedValue={selectedValue} />}

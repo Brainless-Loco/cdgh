@@ -47,8 +47,8 @@ const DivisionWiseBarGraph = ({setTableRows, setTableCols}) => {
               {
                 label: 'Division-wise Count',
                 data: Object.values(divisionCounts),
-                backgroundColor: 'rgba(3, 192, 252, 0.7)',
-                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: '#0303ff',
+                borderColor: '#1497a3',
                 borderWidth: 1,
               },
             ],

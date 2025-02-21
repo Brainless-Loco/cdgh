@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, BarElement, Tooltip, Legend } from 'chart.js';
 import Papa from 'papaparse';
@@ -65,8 +64,8 @@ export default function ADM3TotalCountsChittagong({ setTableRows, setTableCols }
             {
                 label: 'Total Patients',
                 data: adm3Data.map(adm3 => totalCountsByADM3[adm3] || 0), // Total count for each ADM3_EN
-                backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: '#2200ff',
+                borderColor: '#2200ff',
                 borderWidth: 1,
             },
         ],

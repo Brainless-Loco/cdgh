@@ -77,10 +77,10 @@ export default function AgeCategoryDistributionPieChart({setTableRows, setTableC
             {
                 data: Object.values(ageCounts),
                 backgroundColor: [
-                    'rgba(75, 192, 192, 0.7)',  // Non-Adults
-                    'rgba(54, 162, 235, 0.7)',  // Adults
-                    'rgba(153, 102, 255, 0.7)', // Mature Working Age
-                    'rgba(255, 99, 132, 0.7)',  // Elderly
+                    'purple',  // Non-Adults
+                    'red',  // Adults
+                    'blue', // Mature Working Age
+                    'yellow',  // Elderly
                 ],
                 borderColor: ['#fff', '#fff', '#fff', '#fff', '#fff'],
                 borderWidth: 1,

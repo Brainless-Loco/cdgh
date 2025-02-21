@@ -81,32 +81,32 @@ export default function AgeCategoryLineGraphChittagong({setTableRows, setTableCo
             {
                 label: 'Non-Adults (0-18)',
                 data: labels.map((subdistrict) => ageCategoryData[subdistrict]?.['Non-Adults'] || 0),
-                borderColor: 'rgba(75, 192, 192, 1)',
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'green',
+                backgroundColor: 'green',
                 tension: 0, // Straight lines
                 fill: false,
             },
             {
                 label: 'Adults (18-40)',
                 data: labels.map((subdistrict) => ageCategoryData[subdistrict]?.['Adults'] || 0),
-                borderColor: 'rgba(54, 162, 235, 1)',
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'blue',
+                backgroundColor: 'blue',
                 tension: 0, // Straight lines
                 fill: false,
             },
             {
                 label: 'Mature Working Aged (41-60)',
                 data: labels.map((subdistrict) => ageCategoryData[subdistrict]?.['Mature Working Aged'] || 0),
-                borderColor: 'rgba(153, 102, 255, 1)',
-                backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                borderColor: 'red',
+                backgroundColor: 'red',
                 tension: 0, // Straight lines
                 fill: false,
             },
             {
                 label: 'Elderly (60+)',
                 data: labels.map((subdistrict) => ageCategoryData[subdistrict]?.Elderly || 0),
-                borderColor: 'rgba(255, 99, 132, 1)',
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'yellow',
+                backgroundColor: 'yellow',
                 tension: 0, // Straight lines
                 fill: false,
             },

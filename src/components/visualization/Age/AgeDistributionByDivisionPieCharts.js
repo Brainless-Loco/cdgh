@@ -74,10 +74,10 @@ export default function AgeDistributionByDivisionPieCharts({setTableRows, setTab
     
 
     const colors = [
-        'rgba(75, 192, 192, 0.7)',  // Non-Adults
-        'rgba(54, 162, 235, 0.7)',  // Adults
-        'rgba(153, 102, 255, 0.7)', // Mature Working Aged
-        'rgba(255, 99, 132, 0.7)',  // Elderly
+        'purple',  // Non-Adults
+        'red',  // Adults
+        'blue', // Mature Working Age
+        'yellow',  // Elderly
     ];
 
     const renderPieCharts = () => {

@@ -84,7 +84,7 @@ export default function HeightBarGraph({ setTableRows, setTableCols }) {
             {
                 label: 'Male',
                 data: labels.map(range => heightCounts[range].M),
-                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                backgroundColor: 'red',
                 barThickness: 30,
                 borderRadius: 4,
                 borderSkipped: false,
@@ -92,7 +92,7 @@ export default function HeightBarGraph({ setTableRows, setTableCols }) {
             {
                 label: 'Female',
                 data: labels.map(range => heightCounts[range].F),
-                backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                backgroundColor: 'blue',
                 barThickness: 30,
                 borderRadius: 4,
                 borderSkipped: false,

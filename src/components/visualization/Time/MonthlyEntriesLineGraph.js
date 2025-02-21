@@ -7,12 +7,12 @@ import Papa from 'papaparse';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
 
-export default function MonthlyEntriesLineGraph({setTableRows, setTableCols}) {
+export default function MonthlyEntriesLineGraph({ setTableRows, setTableCols }) {
     const [monthlyCounts, setMonthlyCounts] = useState({});
 
     useEffect(() => {
         // Parse finalData.csv to count entries for each month and by gender
-        Papa.parse('/finalData.csv', {
+        Papa.parse('/finalData2.csv', {
             download: true,
             header: true,
             complete: (result) => {
@@ -20,7 +20,8 @@ export default function MonthlyEntriesLineGraph({setTableRows, setTableCols}) {
                     const entryDate = row['Entry Date']; // Assuming 'Entry Date' is the column name
                     const sex = row['Sex']; // Assuming 'Sex' is the column name
                     if (entryDate && sex) {
-                        const [day, month, year] = entryDate.split('/').map(Number);
+                        // eslint-disable-next-line
+                        const [month,day, year] = entryDate.split('/').map(Number);
                         const formattedMonth = `${String(month).padStart(2, '0')}-${year}`;
                         acc[formattedMonth] = acc[formattedMonth] || { total: 0, male: 0, female: 0 };
                         acc[formattedMonth].total += 1;
@@ -29,7 +30,7 @@ export default function MonthlyEntriesLineGraph({setTableRows, setTableCols}) {
                     }
                     return acc;
                 }, {});
-    
+
                 // Sort by year and month
                 const sortedCounts = Object.keys(counts)
                     .sort((a, b) => {
@@ -41,7 +42,7 @@ export default function MonthlyEntriesLineGraph({setTableRows, setTableCols}) {
                         acc[key] = counts[key];
                         return acc;
                     }, {});
-    
+
                 // Set the table columns (headers)
                 const tableCols = [
                     { field: 'month', headerName: 'Month', flex: 1 },
@@ -50,7 +51,7 @@ export default function MonthlyEntriesLineGraph({setTableRows, setTableCols}) {
                     { field: 'female', headerName: 'Female', flex: 1 },
                 ];
                 setTableCols(tableCols);
-    
+
                 // Set the table rows
                 const tableRows = Object.keys(sortedCounts).map((month) => ({
                     id: month, // Use month as the ID
@@ -60,13 +61,12 @@ export default function MonthlyEntriesLineGraph({setTableRows, setTableCols}) {
                     female: sortedCounts[month].female,
                 }));
                 setTableRows(tableRows);
-    
+
                 // Optionally set monthlyCounts if needed for other purposes
                 setMonthlyCounts(sortedCounts);
             },
         });
     }, [setTableRows, setTableCols]);
-    
 
     // Map month numbers to their names
     const monthNames = [
@@ -74,14 +74,22 @@ export default function MonthlyEntriesLineGraph({setTableRows, setTableCols}) {
         'July', 'August', 'September', 'October', 'November', 'December'
     ];
 
-    const labels = Object.keys(monthlyCounts).map((key) => {
-        const [month, year] = key.split('-');
-        return `${monthNames[parseInt(month, 10) - 1]}`; // Convert month to name
-    });
+    // Generate labels for all 12 months
+    const labels = monthNames;
 
-    const totalData = Object.values(monthlyCounts).map((data) => data.total);
-    const maleData = Object.values(monthlyCounts).map((data) => data.male);
-    const femaleData = Object.values(monthlyCounts).map((data) => data.female);
+    // Initialize data for each month
+    const totalData = new Array(12).fill(0);
+    const maleData = new Array(12).fill(0);
+    const femaleData = new Array(12).fill(0);
+
+    // Populate the data arrays
+    Object.keys(monthlyCounts).forEach((key) => {
+        const [month] = key.split('-').map(Number);
+        const monthIndex = month - 1; // Convert to zero-based index
+        totalData[monthIndex] = monthlyCounts[key].total;
+        maleData[monthIndex] = monthlyCounts[key].male;
+        femaleData[monthIndex] = monthlyCounts[key].female;
+    });
 
     const data = {
         labels,
@@ -89,24 +97,24 @@ export default function MonthlyEntriesLineGraph({setTableRows, setTableCols}) {
             {
                 label: 'Total',
                 data: totalData,
-                borderColor: 'rgba(75, 192, 192, 1)',
-                backgroundColor: 'rgba(4, 192, 192, 0.2)',
+                borderColor: 'green',
+                backgroundColor: 'green',
                 tension: 0.1,
                 fill: true,
             },
             {
                 label: 'Male',
                 data: maleData,
-                borderColor: 'rgba(54, 162, 235, 1)',
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'red',
+                backgroundColor: 'red',
                 tension: 0.1,
                 fill: false,
             },
             {
                 label: 'Female',
                 data: femaleData,
-                borderColor: 'rgba(255, 99, 132, 1)',
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'blue',
+                backgroundColor: 'blue',
                 tension: 0.1,
                 fill: false,
             },

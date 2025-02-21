@@ -79,7 +79,7 @@ export default function BMIBarGraph({ setTableRows, setTableCols }) {
             {
                 label: 'Male',
                 data: labels.map(category => bmiCounts[category].M),
-                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                backgroundColor: 'red',
                 barThickness: 30,
                 borderRadius: 4,
                 borderSkipped: false,
@@ -87,7 +87,7 @@ export default function BMIBarGraph({ setTableRows, setTableCols }) {
             {
                 label: 'Female',
                 data: labels.map(category => bmiCounts[category].F),
-                backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                backgroundColor: 'blue',
                 barThickness: 30,
                 borderRadius: 4,
                 borderSkipped: false,

@@ -1,4 +1,9 @@
-import { Accordion, AccordionSummary, AccordionDetails, FormControl, RadioGroup, Typography } from "@mui/material";
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from "@mui/material/AccordionDetails";
+import FormControl from '@mui/material/FormControl';
+import Typography from '@mui/material/Typography';
+import RadioGroup from '@mui/material/RadioGroup';
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const CustomAccordion = ({ option, handleSelectionChange, renderOptions }) => {
@@ -6,15 +11,15 @@ const CustomAccordion = ({ option, handleSelectionChange, renderOptions }) => {
         <Accordion
             key={option.category}
             defaultExpanded={true} // Accordion starts expanded
-            className="my-3 rounded-lg shadow-md w-[95%]"
-            sx={{backgroundColor:'#0c1021',marginX:'auto'}}
+            className="my-3 rounded-lg shadow-md w-[95%] "
+            sx={{backgroundColor:'#0a1b4a',marginX:'auto'}}
         >
             <AccordionSummary expandIcon={<ExpandMoreIcon sx={{color:'white'}}/>}>
-                {option.icon && <option.icon className="mr-2 text-white" />}
-                <Typography variant="h6" className="font-semibold text-white">{option.category}</Typography>
+                {option.icon && option.icon}
+                <Typography variant="h6" className="font-semibold text-cyan-100">{option.category}</Typography>
             </AccordionSummary>
             <AccordionDetails className="h-auto">
-                <FormControl>
+                <FormControl >
                     <RadioGroup
                         name={option.category}
                         onChange={(e) => handleSelectionChange(e.target.value)}

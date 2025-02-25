@@ -9,7 +9,11 @@ import TabularContent from './TabularContent';
 import MapContent from './MapContent';
 import Button from '@mui/material/Button';
 import CustomAccordion from './VisualizingOptions/CustomAccordion';
-
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import ScheduleIcon from '@mui/icons-material/Schedule';
+import WcIcon from '@mui/icons-material/Wc';
+import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 
 export default function Home() {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -36,6 +40,7 @@ export default function Home() {
           value: 'location-chittagong-city',
         },
       ],
+      icon: <LocationOnIcon className='text-white text-xl mr-2 mt-1'/>
     },
     {
       category: 'Sex',
@@ -48,6 +53,7 @@ export default function Home() {
         },
         // { label: 'Chittagong City Corporation', value: 'sex-chittagong-city' },
       ],
+      icon: <WcIcon  className='text-white text-xl mr-2 mt-1'/>
     },
     {
       category: 'Time',
@@ -55,6 +61,7 @@ export default function Home() {
         { label: 'Month', value: 'time-month' }, // Line Graph
         { label: 'WeekDay', value: 'time-weekday' }, // Bargraph
       ],
+      icon: <CalendarTodayIcon className='text-white text-xl mr-2 mt-1'/>
     },
     {
       category: 'Age',
@@ -64,6 +71,7 @@ export default function Home() {
         { label: 'Subdistrict Wise (Chittagong District)', value: 'age-chittagong-district' },
         { label: 'Chittagong City Corporation', value: 'age-chittagong-city' },
       ],
+      icon: <ScheduleIcon className='text-white text-xl mr-2 mt-1'/>
     },
     {
       category: 'Physical Metrics',
@@ -72,6 +80,7 @@ export default function Home() {
         { label: 'Height Range', value: 'physical-height-range' },
         { label: 'Weight Range', value: 'physical-weight-range' },
       ],
+      icon: <MonitorHeartIcon className='text-white text-xl mr-2 mt-1'/>
     },
   ]);
 
@@ -97,7 +106,10 @@ export default function Home() {
           minWidth: '200px',
           display: 'block',
           textAlign: 'left',
-          fontWeight: 'bold'
+          fontWeight: selectedValue === level.value ? '500 !important':'400 !important',
+          color:  selectedValue === level.value ? '#0a1b4a !important':'white !important',
+          border:'1px solid white',
+          bgcolor:selectedValue === level.value && 'white !important'
         }}
       >
         {level.label}
@@ -128,7 +140,7 @@ export default function Home() {
 
       <Box className="w-full flex h-[90vh] justify-between">
 
-        <Box sx={{ bgcolor: '#07021a' }} className="flex  flex-col items-center flex-nowrap w-1/4 pt-4 pb-4 h-[90vh] overflow-y-auto">
+        <Box className="flex bg-slate-300 flex-col items-center flex-nowrap w-1/4 pt-4 pb-4 h-[90vh] overflow-y-auto">
           {/* <Typography variant="h4" gutterBottom>
             Visualize
           </Typography> */}
@@ -144,10 +156,11 @@ export default function Home() {
                 return <Tab sx={{
                   border:id === selectedTab ? "2px solid #111a40" : '2px solid transparent',
                   borderWidth:'3px',
-                  borderBottom:'none',
-                  borderBottomLeftRadius:'0px',
-                  borderBottomRightRadius:'0px',
-                  borderRadius:'8px'
+                  // borderTop:'none',
+                  color:id === selectedTab ? '#0c2461 !important':'',
+                  fontWeight: id === selectedTab? 'bold !important' : '500',
+                  cursor: 'pointer',
+                  transition: '0.3s ease',
                 }}
                   key={id} label={tab} />
               })

@@ -18,6 +18,7 @@ import HeightBarGraph from '../visualization/Physical_Matrics/HeightBarGraph'
 import WeightBarGraph from '../visualization/Physical_Matrics/WeightBarGraph'
 import WardTotalCountsChittagong from '../visualization/Location/WardTotalCountsChittagong';
 import AgeDistributionChittagongCityCorp from '../visualization/Age/ChittagongCityCorpAgeDistribution '
+import WardSexDistributionChittagong from '../visualization/Sex/WardSexDistributionChittagong'
 
 
 export default function GraphicalContent({selectedValue, setTableRows, setTableCols}) {
@@ -41,6 +42,7 @@ export default function GraphicalContent({selectedValue, setTableRows, setTableC
         {selectedValue === 'sex-overall-bangladesh' && <SexCategoryOveraAllInBangladeshPieChart setTableRows={setTableRows} setTableCols={setTableCols}/>}
         {selectedValue === 'sex-division-wise' && <DivisionSexDistributionBarChart setTableRows={setTableRows} setTableCols={setTableCols}/>}
         {selectedValue === 'sex-chittagong-district' && <ADM3SexDistributionChittagong setTableRows={setTableRows} setTableCols={setTableCols}/>}
+        {selectedValue === 'sex-chittagong-city' && <WardSexDistributionChittagong setTableRows={setTableRows} setTableCols={setTableCols}/>}
 
         {/* Tme */}
         {selectedValue === 'time-month' && <MonthlyEntriesLineGraph setTableRows={setTableRows} setTableCols={setTableCols}/>}

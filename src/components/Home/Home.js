@@ -51,7 +51,7 @@ export default function Home() {
           label: 'Chittagong District (Subdistrict Wise)',
           value: 'sex-chittagong-district',
         },
-        // { label: 'Chittagong City Corporation', value: 'sex-chittagong-city' },
+        { label: 'Chittagong City Corporation', value: 'sex-chittagong-city' },
       ],
       icon: <WcIcon  className='text-white text-xl mr-2 mt-1'/>
     },

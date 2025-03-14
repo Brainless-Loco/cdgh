@@ -160,8 +160,8 @@ export default function AgeCategoryLineGraphChittagong({ setTableRows, setTableC
 
     return (
         <Box className="h-full w-full">
-            <Typography variant="h5">Age Distribution by Subdistrict (Chittagong District)</Typography>
-            <Box className="h-[90%] w-full overflow-hidden flex justify-center">
+            <Typography variant="h6">Age Distribution by Subdistrict (Chittagong District)</Typography>
+            <Box className="h-[95%] w-full overflow-hidden flex justify-center">
                 <Line data={data} options={options} />
             </Box>
         </Box>

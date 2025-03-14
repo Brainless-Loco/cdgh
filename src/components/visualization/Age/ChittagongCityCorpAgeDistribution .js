@@ -161,7 +161,7 @@ export default function AgeDistributionChittagongCityCorp({ setTableRows, setTab
 
     return (
         <Box className="h-full w-full">
-            <Box className="h-[95%] w-full flex justify-center items-center">
+            <Box className="h-[97%] w-full flex justify-center items-center">
                 <Line data={data} options={options} />
             </Box>
         </Box>

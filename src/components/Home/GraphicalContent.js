@@ -16,6 +16,9 @@ import ADM3TotalCountsChittagong from '../visualization/Location/ADM3TotalCounts
 import BMIBarGraph from '../visualization/Physical_Matrics/BMIBarGraph'
 import HeightBarGraph from '../visualization/Physical_Matrics/HeightBarGraph'
 import WeightBarGraph from '../visualization/Physical_Matrics/WeightBarGraph'
+import WardTotalCountsChittagong from '../visualization/Location/WardTotalCountsChittagong';
+import AgeDistributionChittagongCityCorp from '../visualization/Age/ChittagongCityCorpAgeDistribution '
+
 
 export default function GraphicalContent({selectedValue, setTableRows, setTableCols}) {
   return (
@@ -32,6 +35,7 @@ export default function GraphicalContent({selectedValue, setTableRows, setTableC
         {selectedValue === 'location-division' && <DivisionWiseBarGraph setTableRows={setTableRows} setTableCols={setTableCols}/>}
         {selectedValue === 'location-district' && <DistrictBarGraph setTableRows={setTableRows} setTableCols={setTableCols}/>}
         {selectedValue === 'location-chittagong-district' && <ADM3TotalCountsChittagong  setTableRows={setTableRows} setTableCols={setTableCols}/> }
+        {selectedValue === 'location-chittagong-city' && <WardTotalCountsChittagong setTableRows={setTableRows} setTableCols={setTableCols}/>}
 
         {/* Sex */}
         {selectedValue === 'sex-overall-bangladesh' && <SexCategoryOveraAllInBangladeshPieChart setTableRows={setTableRows} setTableCols={setTableCols}/>}
@@ -46,6 +50,7 @@ export default function GraphicalContent({selectedValue, setTableRows, setTableC
         {selectedValue === 'age-overall-bangladesh' && <AgeCategoryDistributionPieChart setTableRows={setTableRows} setTableCols={setTableCols}/>}
         {selectedValue === 'age-division-wise' && <AgeDistributionByDivisionPieCharts setTableRows={setTableRows} setTableCols={setTableCols}/>}
         {selectedValue === 'age-chittagong-district' && <AgeCategoryLineGraphChittagong setTableRows={setTableRows} setTableCols={setTableCols}/>}
+        {selectedValue === 'age-chittagong-city' && <AgeDistributionChittagongCityCorp setTableRows={setTableRows} setTableCols={setTableCols}/>}
 
         {/* Physical Metrics */}
         {selectedValue === 'physical-bmi-distribution' && <BMIBarGraph setTableRows={setTableRows} setTableCols={setTableCols}/> }

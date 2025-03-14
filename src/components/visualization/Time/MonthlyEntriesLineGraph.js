@@ -12,7 +12,7 @@ export default function MonthlyEntriesLineGraph({ setTableRows, setTableCols }) 
 
     useEffect(() => {
         // Parse finalData.csv to count entries for each month and by gender
-        Papa.parse('/finalData2.csv', {
+        Papa.parse('/finalData_01.csv', {
             download: true,
             header: true,
             complete: (result) => {

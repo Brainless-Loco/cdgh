@@ -19,7 +19,7 @@ export default function WeekdayEntriesLineGraph({setTableRows, setTableCols}) {
     });
 
     useEffect(() => {
-        Papa.parse('/finalData2.csv', {
+        Papa.parse('/finalData_01.csv', {
             download: true,
             header: true,
             complete: (result) => {

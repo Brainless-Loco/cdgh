@@ -7,12 +7,12 @@ import Papa from 'papaparse';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
 
-export default function AgeCategoryLineGraphChittagong({setTableRows, setTableCols}) {
+export default function AgeCategoryLineGraphChittagong({ setTableRows, setTableCols }) {
     const [ageCategoryData, setAgeCategoryData] = useState({});
 
     useEffect(() => {
         // Parse finalData.csv to categorize and count patients by age for each subdistrict
-        Papa.parse('/finalData.csv', {
+        Papa.parse('/finalData_01.csv', {
             download: true,
             header: true,
             complete: (result) => {
@@ -20,50 +20,62 @@ export default function AgeCategoryLineGraphChittagong({setTableRows, setTableCo
                 const subdistricts = data.reduce((acc, row) => {
                     const subdistrict = row.ADM3_EN; // Subdistrict column
                     const age = parseInt(row.Age, 10);
+                    const ifCityCorp = row.CityCorporation_Area;
     
                     if (!subdistrict || isNaN(age)) return acc;
     
-                    if (!acc[subdistrict]) {
+                    if (!acc[subdistrict] && ifCityCorp !== "Y") {
                         acc[subdistrict] = {
                             'Non-Adults': 0,
                             'Adults': 0,
                             'Mature Working Aged': 0,
                             Elderly: 0,
+                            total: 0, // Track total count per subdistrict
                         };
                     }
+                    if (ifCityCorp !== "Y") {
+                        if (age >= 0 && age < 18) acc[subdistrict]["Non-Adults"] += 1;
+                        else if (age >= 18 && age <= 40) acc[subdistrict]['Adults'] += 1;
+                        else if (age >= 41 && age <= 60) acc[subdistrict]['Mature Working Aged'] += 1;
+                        else if (age >= 60) acc[subdistrict].Elderly += 1;
     
-                    if (age >= 0 && age < 18) acc[subdistrict]["Non-Adults"] += 1;
-                    else if (age >= 18 && age <= 40) acc[subdistrict]['Adults'] += 1;
-                    else if (age >= 41 && age <= 60) acc[subdistrict]['Mature Working Aged'] += 1;
-                    else if (age >= 60) acc[subdistrict].Elderly += 1;
+                        acc[subdistrict].total += 1; // Increment total count
+                    }
     
                     return acc;
                 }, {});
     
+                // **🔹 Sorting subdistricts by total count (Descending Order)**
+                const sortedEntries = Object.entries(subdistricts).sort((a, b) => b[1].total - a[1].total);
+                
+                // Extract sorted subdistricts
+                const sortedSubdistricts = Object.fromEntries(sortedEntries);
+    
                 // Set the categorized data for age groups in subdistricts
-                setAgeCategoryData(subdistricts);
+                setAgeCategoryData(sortedSubdistricts);
     
                 // Prepare table rows for display
-                const tableRows = [];
+                let tableRows = [];
                 let rowId = 0; // Counter for unique row ID
     
-                Object.keys(subdistricts).forEach((subdistrict) => {
-                    const subdistrictData = subdistricts[subdistrict];
+                sortedEntries.forEach(([subdistrict, subdistrictData]) => {
                     Object.keys(subdistrictData).forEach((ageGroup) => {
-                        tableRows.push({
-                            id: rowId++, // Unique row ID
-                            subdistrict: subdistrict,
-                            ageGroup: ageGroup,
-                            count: subdistrictData[ageGroup],
-                        });
+                        if (ageGroup !== 'total') { // Exclude 'total' from age groups
+                            tableRows.push({
+                                id: rowId++, // Unique row ID
+                                subdistrict: subdistrict,
+                                ageGroup: ageGroup,
+                                count: subdistrictData[ageGroup],
+                            });
+                        }
                     });
                 });
     
                 // Define table columns
                 const tableCols = [
-                    { field: 'subdistrict', headerName: 'Subdistrict', flex:1 },
-                    { field: 'ageGroup', headerName: 'Age Group', flex:1 },
-                    { field: 'count', headerName: 'Count', flex:1 },
+                    { field: 'subdistrict', headerName: 'Subdistrict', flex: 1 },
+                    { field: 'ageGroup', headerName: 'Age Group', flex: 1 },
+                    { field: 'count', headerName: 'Count', flex: 1 },
                 ];
     
                 // Set the table rows and columns to state
@@ -73,6 +85,8 @@ export default function AgeCategoryLineGraphChittagong({setTableRows, setTableCo
         });
     }, [setTableRows, setTableCols]);
     
+    
+
 
     const labels = Object.keys(ageCategoryData); // Subdistrict names
     const data = {

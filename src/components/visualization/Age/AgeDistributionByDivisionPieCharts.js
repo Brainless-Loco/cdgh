@@ -12,7 +12,7 @@ export default function AgeDistributionByDivisionPieCharts({setTableRows, setTab
 
     useEffect(() => {
         // Parse finalData.csv to categorize and count patients by age for each division
-        Papa.parse('/finalData.csv', {
+        Papa.parse('/finalData_01.csv', {
             download: true,
             header: true,
             complete: (result) => {

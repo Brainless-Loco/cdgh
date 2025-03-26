@@ -12,11 +12,11 @@ const CustomAccordion = ({ option, handleSelectionChange, renderOptions }) => {
             key={option.category}
             defaultExpanded={true} // Accordion starts expanded
             className="my-3 rounded-lg shadow-md w-[95%] "
-            sx={{backgroundColor:'#0a1b4a',marginX:'auto'}}
+            sx={{backgroundColor:'#f5f5f5',marginX:'auto'}}
         >
-            <AccordionSummary expandIcon={<ExpandMoreIcon sx={{color:'white'}}/>}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon sx={{color:'#0464bc'}}/>}>
                 {option.icon && option.icon}
-                <Typography variant="h6" className="font-semibold text-cyan-100">{option.category}</Typography>
+                <Typography variant="h6" className="font-semibold text-[#0464bc]">{option.category}</Typography>
             </AccordionSummary>
             <AccordionDetails className="h-auto">
                 <FormControl >

@@ -40,7 +40,7 @@ export default function Home() {
           value: 'location-chittagong-city',
         },
       ],
-      icon: <LocationOnIcon className='text-white text-xl mr-2 mt-1'/>
+      icon: <LocationOnIcon className='text-[#0464bc] text-xl mr-2 mt-1' />
     },
     {
       category: 'Sex',
@@ -53,7 +53,7 @@ export default function Home() {
         },
         { label: 'Chittagong City Corporation', value: 'sex-chittagong-city' },
       ],
-      icon: <WcIcon  className='text-white text-xl mr-2 mt-1'/>
+      icon: <WcIcon className='text-[#0464bc] text-xl mr-2 mt-1' />
     },
     {
       category: 'Time',
@@ -61,7 +61,7 @@ export default function Home() {
         { label: 'Month', value: 'time-month' }, // Line Graph
         { label: 'WeekDay', value: 'time-weekday' }, // Bargraph
       ],
-      icon: <CalendarTodayIcon className='text-white text-xl mr-2 mt-1'/>
+      icon: <CalendarTodayIcon className='text-[#0464bc] text-xl mr-2 mt-1' />
     },
     {
       category: 'Age',
@@ -71,7 +71,7 @@ export default function Home() {
         { label: 'Subdistrict Wise (Chittagong District)', value: 'age-chittagong-district' },
         { label: 'Chittagong City Corporation', value: 'age-chittagong-city' },
       ],
-      icon: <ScheduleIcon className='text-white text-xl mr-2 mt-1'/>
+      icon: <ScheduleIcon className='text-[#0464bc] text-xl mr-2 mt-1' />
     },
     {
       category: 'Physical Metrics',
@@ -80,7 +80,7 @@ export default function Home() {
         { label: 'Height Range', value: 'physical-height-range' },
         { label: 'Weight Range', value: 'physical-weight-range' },
       ],
-      icon: <MonitorHeartIcon className='text-white text-xl mr-2 mt-1'/>
+      icon: <MonitorHeartIcon className='text-[#0464bc] text-xl mr-2 mt-1' />
     },
   ]);
 
@@ -106,10 +106,10 @@ export default function Home() {
           minWidth: '200px',
           display: 'block',
           textAlign: 'left',
-          fontWeight: selectedValue === level.value ? '500 !important':'400 !important',
-          color:  selectedValue === level.value ? '#0a1b4a !important':'white !important',
-          border:'1px solid white',
-          bgcolor:selectedValue === level.value && 'white !important'
+          fontWeight: selectedValue === level.value ? '700 !important' : '500 !important',
+          color: selectedValue === level.value ? 'white !important' : '#1d85c8 !important',
+          border: '1px solid #0464bc',
+          bgcolor: selectedValue === level.value ? '#1d85c8 !important' : 'white !important'
         }}
       >
         {level.label}
@@ -131,16 +131,36 @@ export default function Home() {
         <meta name="description" content="Welcome to the Visualization of CDGH Data by BIKE Lab" />
       </Helmet>
       <Box
-        className="h-[10vh] flex justify-center items-center"
-        sx={{ backgroundColor: '#0a1b4a', }}>
-        <Typography variant="h4" className="text-cyan-300" sx={{ fontFamily: 'monospace' }}>
+        className="h-[10vh] py-1 flex justify-between bg-[#1d85c8] items-center px-4"
+      >
+        {/* Left Logo */}
+        <img
+          src="/Static/Logo/cdgh_logo.png"
+          alt="Left Logo"
+          className="h-full w-auto bg-slate-50 rounded"
+        />
+
+        {/* Title in the center */}
+        <Typography
+          variant="h4"
+          className="text-[#0c2461] text-center"
+          sx={{ fontFamily: 'monospace', flexGrow: 1, fontWeight:700 }}
+        >
           Chattogram Diabetic General Hospital Dashboard
         </Typography>
+
+        {/* Right Logo */}
+        <img
+          src="/Static/Logo/bike-lab-logo.png"
+          alt="Right Logo"
+          className="h-full w-auto bg-[#0c2461] rounded"
+        />
       </Box>
+
 
       <Box className="w-full flex h-[90vh] justify-between">
 
-        <Box className="flex bg-slate-300 flex-col items-center flex-nowrap w-1/4 pt-4 pb-4 h-[90vh] overflow-y-auto">
+        <Box className="flex bg-[#1d85c8] flex-col items-center flex-nowrap w-1/4 pt-4 pb-4 h-[90vh] overflow-y-auto">
           {/* <Typography variant="h4" gutterBottom>
             Visualize
           </Typography> */}
@@ -154,11 +174,8 @@ export default function Home() {
             {
               ["Graphical", "Tabular", "Map"].map((tab, id) => {
                 return <Tab sx={{
-                  border:id === selectedTab ? "2px solid #111a40" : '2px solid transparent',
-                  borderWidth:'3px',
-                  // borderTop:'none',
-                  color:id === selectedTab ? '#0c2461 !important':'',
-                  fontWeight: id === selectedTab? 'bold !important' : '500',
+                  color: id === selectedTab ? '#0c2461 !important' : '',
+                  fontWeight: id === selectedTab ? 'bold !important' : '500',
                   cursor: 'pointer',
                   transition: '0.3s ease',
                 }}
@@ -173,6 +190,16 @@ export default function Home() {
           </Box>
         </Box>
       </Box>
+      {/* A copywrite text with Box  here  */}
+      <Box className="w-full h-[10vh] py-1 flex justify-center items-center bg-[#0c2461] px-4">
+        {/* Developed by BIKE Lab (https://web.bike-csecu.com) */}
+        <Typography variant="subtitle1" className="text-[#fff] text-center">
+          Developed by <a href='https://web.bike-csecu.com' className='font-bold'>BIKE Lab</a> | Copyright © 2025 All rights reserved.
+        </Typography>
+      </Box>
+      
+
+
 
     </Box>
   )

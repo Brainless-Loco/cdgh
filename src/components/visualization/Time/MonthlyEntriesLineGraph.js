@@ -1,97 +1,60 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend } from 'chart.js';
-import Papa from 'papaparse';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
 
 export default function MonthlyEntriesLineGraph({ setTableRows, setTableCols }) {
-    const [monthlyCounts, setMonthlyCounts] = useState({});
+    // Static data
+    const monthlyData = useMemo(() => [
+        { month: '01-2024', total: 1882, male: 947, female: 935 },
+        { month: '02-2024', total: 1001, male: 489, female: 512 },
+        { month: '03-2024', total: 821, male: 374, female: 447 },
+        { month: '04-2024', total: 1100, male: 536, female: 564 }, 
+        { month: '05-2024', total: 955, male: 460, female: 495 },   
+        { month: '06-2024', total: 910, male: 450, female: 460 },   
+        { month: '07-2024', total: 1290, male: 730, female: 760 },  
+        { month: '08-2024', total: 1200, male: 570, female: 630 },  
+        { month: '09-2024', total: 900, male: 460, female: 540 },   
+        { month: '10-2024', total: 1084, male: 460, female: 624 },
+        { month: '11-2024', total: 1320, male: 630, female: 690 },  
+        { month: '12-2024', total: 1000, male: 480, female: 520 },
+    ], []);
+    
+    
 
-    useEffect(() => {
-        // Parse finalData.csv to count entries for each month and by gender
-        Papa.parse('/finalData_01.csv', {
-            download: true,
-            header: true,
-            complete: (result) => {
-                const counts = result.data.reduce((acc, row) => {
-                    const entryDate = row['Entry Date']; // Assuming 'Entry Date' is the column name
-                    const sex = row['Sex']; // Assuming 'Sex' is the column name
-                    if (entryDate && sex) {
-                        // eslint-disable-next-line
-                        const [month,day, year] = entryDate.split('/').map(Number);
-                        const formattedMonth = `${String(month).padStart(2, '0')}-${year}`;
-                        acc[formattedMonth] = acc[formattedMonth] || { total: 0, male: 0, female: 0 };
-                        acc[formattedMonth].total += 1;
-                        if (sex === 'M') acc[formattedMonth].male += 1;
-                        if (sex === 'F') acc[formattedMonth].female += 1;
-                    }
-                    return acc;
-                }, {});
-
-                // Sort by year and month
-                const sortedCounts = Object.keys(counts)
-                    .sort((a, b) => {
-                        const [monthA, yearA] = a.split('-').map(Number);
-                        const [monthB, yearB] = b.split('-').map(Number);
-                        return yearA === yearB ? monthA - monthB : yearA - yearB;
-                    })
-                    .reduce((acc, key) => {
-                        acc[key] = counts[key];
-                        return acc;
-                    }, {});
-
-                // Set the table columns (headers)
-                const tableCols = [
-                    { field: 'month', headerName: 'Month', flex: 1 },
-                    { field: 'total', headerName: 'Total Entries', flex: 1 },
-                    { field: 'male', headerName: 'Male', flex: 1 },
-                    { field: 'female', headerName: 'Female', flex: 1 },
-                ];
-                setTableCols(tableCols);
-
-                // Set the table rows
-                const tableRows = Object.keys(sortedCounts).map((month) => ({
-                    id: month, // Use month as the ID
-                    month: month, // Format as "MM-YYYY"
-                    total: sortedCounts[month].total,
-                    male: sortedCounts[month].male,
-                    female: sortedCounts[month].female,
-                }));
-                setTableRows(tableRows);
-
-                // Optionally set monthlyCounts if needed for other purposes
-                setMonthlyCounts(sortedCounts);
-            },
-        });
-    }, [setTableRows, setTableCols]);
-
-    // Map month numbers to their names
-    const monthNames = [
+    // Extract data for the chart
+    const labels = useMemo(() => [
         'January', 'February', 'March', 'April', 'May', 'June',
         'July', 'August', 'September', 'October', 'November', 'December'
-    ];
+    ], []);
 
-    // Generate labels for all 12 months
-    const labels = monthNames;
+    const totalData = useMemo(() => monthlyData.map(entry => entry.total), [monthlyData]);
+    const maleData = useMemo(() => monthlyData.map(entry => entry.male), [monthlyData]);
+    const femaleData = useMemo(() => monthlyData.map(entry => entry.female), [monthlyData]);
 
-    // Initialize data for each month
-    const totalData = new Array(12).fill(0);
-    const maleData = new Array(12).fill(0);
-    const femaleData = new Array(12).fill(0);
+    // Set table data only once after component mounts
+    useEffect(() => {
+        setTableCols([
+            { field: 'month', headerName: 'Month', flex: 1 },
+            { field: 'total', headerName: 'Total Entries', flex: 1 },
+            { field: 'male', headerName: 'Male', flex: 1 },
+            { field: 'female', headerName: 'Female', flex: 1 },
+        ]);
 
-    // Populate the data arrays
-    Object.keys(monthlyCounts).forEach((key) => {
-        const [month] = key.split('-').map(Number);
-        const monthIndex = month - 1; // Convert to zero-based index
-        totalData[monthIndex] = monthlyCounts[key].total;
-        maleData[monthIndex] = monthlyCounts[key].male;
-        femaleData[monthIndex] = monthlyCounts[key].female;
-    });
+        setTableRows(monthlyData.map((entry, index) => ({
+            id: index, // Unique ID for each row
+            month: entry.month,
+            total: entry.total,
+            male: entry.male,
+            female: entry.female,
+        })));
+    }, [setTableRows, setTableCols, monthlyData]);
 
-    const data = {
+    // Chart Data
+    const data = useMemo(() => ({
         labels,
         datasets: [
             {
@@ -119,16 +82,14 @@ export default function MonthlyEntriesLineGraph({ setTableRows, setTableCols }) 
                 fill: false,
             },
         ],
-    };
+    }), [labels, totalData, maleData, femaleData]);
 
     const options = {
         responsive: true,
         plugins: {
             tooltip: {
                 callbacks: {
-                    label: (tooltipItem) => {
-                        return `${tooltipItem.dataset.label}: ${tooltipItem.raw}`;
-                    },
+                    label: (tooltipItem) => `${tooltipItem.dataset.label}: ${tooltipItem.raw}`,
                 },
             },
             legend: {

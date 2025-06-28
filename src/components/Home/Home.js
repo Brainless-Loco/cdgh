@@ -172,7 +172,8 @@ export default function Home() {
         <Box className="px-1 h-[90vh] w-full overflow-y-auto">
           <Tabs className='pt-1' value={selectedTab} onChange={handleTabChange} aria-label="Main Tabs">
             {
-              ["Graphical", "Tabular", "Map"].map((tab, id) => {
+              // ["Graphical", "Tabular", "Map"]
+              ["Graphical", "Tabular"].map((tab, id) => {
                 return <Tab sx={{
                   color: id === selectedTab ? '#0c2461 !important' : '',
                   fontWeight: id === selectedTab ? 'bold !important' : '500',

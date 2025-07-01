@@ -130,17 +130,12 @@ export default function Home() {
         <title>CDGH | BIKE Lab</title>
         <meta name="description" content="Welcome to the Visualization of CDGH Data by BIKE Lab" />
       </Helmet>
-      <Box
-        className="h-[10vh] py-1 flex justify-between bg-[#1d85c8] items-center px-4"
-      >
-        {/* Left Logo */}
+      {/* <Box className="h-[10vh] py-1 flex justify-between bg-[#1d85c8] items-center px-4">
         <img
           src="/Static/Logo/cdgh_logo.png"
           alt="Left Logo"
           className="h-full w-auto bg-slate-50 rounded"
         />
-
-        {/* Title in the center */}
         <Typography
           variant="h4"
           className="text-[#0c2461] text-center"
@@ -148,14 +143,12 @@ export default function Home() {
         >
           Chattogram Diabetic General Hospital Dashboard
         </Typography>
-
-        {/* Right Logo */}
         <img
           src="/Static/Logo/bike-lab-logo.png"
           alt="Right Logo"
           className="h-full w-auto bg-[#0c2461] rounded"
         />
-      </Box>
+      </Box> */}
 
 
       <Box className="w-full flex h-[90vh] justify-between">
@@ -192,12 +185,12 @@ export default function Home() {
         </Box>
       </Box>
       {/* A copywrite text with Box  here  */}
-      <Box className="w-full h-[10vh] py-1 flex justify-center items-center bg-[#0c2461] px-4">
-        {/* Developed by BIKE Lab (https://web.bike-csecu.com) */}
+      {/* <Box className="w-full h-[10vh] py-1 flex justify-center items-center bg-[#0c2461] px-4">
+        Developed by BIKE Lab (https://web.bike-csecu.com)
         <Typography variant="subtitle1" className="text-[#fff] text-center">
           Developed by <a href='https://web.bike-csecu.com' className='font-bold'>BIKE Lab</a> | Copyright © 2025 All rights reserved.
         </Typography>
-      </Box>
+      </Box> */}
       
 
 

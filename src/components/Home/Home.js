@@ -73,13 +73,40 @@ export default function Home() {
       icon: <ScheduleIcon className='text-[#0464bc] text-xl mr-2 mt-1' />
     },
     {
-      category: 'Physical Metrics',
+      category: 'Overall Health Metrics',
       levels: [
         { label: 'BMI Distribution', value: 'physical-bmi-distribution' },
         { label: 'Height Range', value: 'physical-height-range' },
         { label: 'Weight Range', value: 'physical-weight-range' },
       ],
       icon: <MonitorHeartIcon className='text-[#0464bc] text-xl mr-2 mt-1' />
+    },
+    {
+      category: 'BMI',
+      levels: [
+        { label: 'Division Wise', value: 'bmi-division-wise' },
+        { label: 'Subdistrict Wise (Chittagong District)', value: 'bmi-chittagong-district' },
+        { label: 'Chittagong City Corporation', value: 'bmi-chittagong-city' },
+      ],
+      icon: <ScheduleIcon className='text-[#0464bc] text-xl mr-2 mt-1' />
+    },
+    {
+      category: 'Height',
+      levels: [
+        { label: 'Division Wise', value: 'height-division-wise' },
+        { label: 'Subdistrict Wise (Chittagong District)', value: 'height-chittagong-district' },
+        { label: 'Chittagong City Corporation', value: 'height-chittagong-city' },
+      ],
+      icon: <ScheduleIcon className='text-[#0464bc] text-xl mr-2 mt-1' />
+    },
+    {
+      category: 'Weight',
+      levels: [
+        { label: 'Division Wise', value: 'weight-division-wise' },
+        { label: 'Subdistrict Wise (Chittagong District)', value: 'weight-chittagong-district' },
+        { label: 'Chittagong City Corporation', value: 'weight-chittagong-city' },
+      ],
+      icon: <ScheduleIcon className='text-[#0464bc] text-xl mr-2 mt-1' />
     },
   ]);
 

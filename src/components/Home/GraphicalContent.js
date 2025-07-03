@@ -19,6 +19,12 @@ import WeightBarGraph from '../visualization/Physical_Matrics/WeightBarGraph'
 import WardTotalCountsChittagong from '../visualization/Location/WardTotalCountsChittagong';
 import AgeDistributionChittagongCityCorp from '../visualization/Age/ChittagongCityCorpAgeDistribution '
 import WardSexDistributionChittagong from '../visualization/Sex/WardSexDistributionChittagong'
+import BMICategoryByDivisionPieCharts from '../visualization/BMI/BMICategoryByDivisionPieCharts'
+import HeightCategoryLineGraphChittagong from '../visualization/Height/HeightCategoryLineGraphChittagong'
+import BMICategoryLineGraphChittagong from '../visualization/BMI/BMICategoryLineGraphChittagong'
+import HeightCategoryByDivisionPieCharts from '../visualization/Height/HeightCategoryByDivisionPieCharts'
+import WeightCategoryByDivisionPieCharts from '../visualization/Weight/WeightCategoryByDivisionPieCharts'
+import WeightCategoryLineGraphChittagong from '../visualization/Weight/WeightCategoryLineGraphChittagong'
 
 
 export default function GraphicalContent({selectedValue, setTableRows, setTableCols}) {
@@ -53,6 +59,20 @@ export default function GraphicalContent({selectedValue, setTableRows, setTableC
         {selectedValue === 'age-division-wise' && <AgeDistributionByDivisionPieCharts setTableRows={setTableRows} setTableCols={setTableCols}/>}
         {selectedValue === 'age-chittagong-district' && <AgeCategoryLineGraphChittagong setTableRows={setTableRows} setTableCols={setTableCols}/>}
         {selectedValue === 'age-chittagong-city' && <AgeDistributionChittagongCityCorp setTableRows={setTableRows} setTableCols={setTableCols}/>}
+
+        {/* BMI */}
+        {selectedValue === 'bmi-division-wise' && <BMICategoryByDivisionPieCharts setTableRows={setTableRows} setTableCols={setTableCols}/>}
+        {selectedValue === 'bmi-chittagong-district' && <BMICategoryLineGraphChittagong setTableRows={setTableRows} setTableCols={setTableCols}/>}
+
+        {/* Height */}
+        {selectedValue === 'height-division-wise' && <HeightCategoryByDivisionPieCharts setTableRows={setTableRows} setTableCols={setTableCols}/>}
+        {selectedValue === 'height-chittagong-district' && <HeightCategoryLineGraphChittagong setTableRows={setTableRows} setTableCols={setTableCols}/>}
+
+        {/* Weight */}
+        {selectedValue === 'weight-division-wise' && <WeightCategoryByDivisionPieCharts setTableRows={setTableRows} setTableCols={setTableCols}/>}
+        {selectedValue === 'weight-chittagong-district' && <WeightCategoryLineGraphChittagong setTableRows={setTableRows} setTableCols={setTableCols}/>}
+
+
 
         {/* Physical Metrics */}
         {selectedValue === 'physical-bmi-distribution' && <BMIBarGraph setTableRows={setTableRows} setTableCols={setTableCols}/> }

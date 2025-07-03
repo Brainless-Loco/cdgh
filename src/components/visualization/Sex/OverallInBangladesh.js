@@ -11,8 +11,8 @@ export default function SexCategoryOverallInBangladeshPieChart({setTableRows, se
     const [totalCount, setTotalCount] = useState(0);
 
     useEffect(() => {
-        // Parse finalData.csv to count occurrences of each sex category
-        Papa.parse('/finalData.csv', {
+        // Parse finalData_01.csv to count occurrences of each sex category
+        Papa.parse('/finalData_01.csv', {
             download: true,
             header: true,
             complete: (result) => {
@@ -55,7 +55,7 @@ export default function SexCategoryOverallInBangladeshPieChart({setTableRows, se
         datasets: [
             {
                 data: [sexCounts.Male, sexCounts.Female, sexCounts.Others],
-                backgroundColor: ["#2200ff", "#ff0000", '#f6ff00'],
+                backgroundColor: ["#ff0000", "#2200ff", '#f6ff00'],
                 borderColor: ['#fff', '#fff', '#fff'],
                 borderWidth: 1,
             },

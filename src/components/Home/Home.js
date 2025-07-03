@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import GraphicalContent from './GraphicalContent';
@@ -151,9 +150,9 @@ export default function Home() {
       </Box> */}
 
 
-      <Box className="w-full flex h-[90vh] justify-between">
+      <Box className="w-full flex h-[100vh] justify-between">
 
-        <Box className="flex bg-[#1d85c8] flex-col items-center flex-nowrap w-1/4 pt-4 pb-4 h-[90vh] overflow-y-auto">
+        <Box className="flex bg-[#1d85c8] flex-col items-center flex-nowrap w-1/4 pt-4 pb-4 h-full overflow-y-auto">
           {/* <Typography variant="h4" gutterBottom>
             Visualize
           </Typography> */}
@@ -162,7 +161,7 @@ export default function Home() {
           ))}
         </Box>
 
-        <Box className="px-1 h-[90vh] w-full overflow-y-auto">
+        <Box className="px-1 h-[100vh] w-full overflow-y-auto">
           <Tabs className='pt-1' value={selectedTab} onChange={handleTabChange} aria-label="Main Tabs">
             {
               // ["Graphical", "Tabular", "Map"]

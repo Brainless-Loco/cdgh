@@ -11,7 +11,7 @@ export default function ADM3SexDistributionChittagong({ setTableRows, setTableCo
     const [sexCountsByADM3, setSexCountsByADM3] = useState({});
 
     useEffect(() => {
-        // Parse finalData.csv to count occurrences of male and female for each ADM3_EN in Chittagong
+        // Parse finalData_01.csv to count occurrences of male and female for each ADM3_EN in Chittagong
         Papa.parse('/finalData_01.csv', {
             download: true,
             header: true,
@@ -86,15 +86,15 @@ export default function ADM3SexDistributionChittagong({ setTableRows, setTableCo
             {
                 label: 'Male',
                 data: adm3Data.map(adm3 => sexCountsByADM3[adm3]?.Male || 0), // Male count for each ADM3_EN
-                backgroundColor: 'blue',
-                borderColor: 'blue',
+                backgroundColor: 'red',
+                borderColor: 'red',
                 borderWidth: 1,
             },
             {
                 label: 'Female',
                 data: adm3Data.map(adm3 => sexCountsByADM3[adm3]?.Female || 0), // Female count for each ADM3_EN
-                backgroundColor: 'red',
-                borderColor: 'red',
+                backgroundColor: 'blue',
+                borderColor: 'blue',
                 borderWidth: 1,
             },
         ],

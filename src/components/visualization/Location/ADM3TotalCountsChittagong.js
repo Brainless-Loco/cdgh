@@ -11,7 +11,7 @@ export default function ADM3TotalCountsChittagong({ setTableRows, setTableCols }
     const [totalCountsByADM3, setTotalCountsByADM3] = useState({});
 
     useEffect(() => {
-        // Parse finalData.csv to count total occurrences for each ADM3_EN in Chittagong
+        // Parse finalData_01.csv to count total occurrences for each ADM3_EN in Chittagong
         Papa.parse('/finalData_01.csv', {
             download: true,
             header: true,

@@ -11,8 +11,8 @@ export default function DistrictBarGraph({setTableRows, setTableCols}) {
     const [districtNames, setDistrictNames] = useState([]);
     
     useEffect(() => {
-        // Parse finalData.csv to count rows per district
-        Papa.parse('/finalData.csv', {
+        // Parse finalData_01.csv to count rows per district
+        Papa.parse('/finalData_01.csv', {
             download: true,
             header: true,
             complete: (result) => {

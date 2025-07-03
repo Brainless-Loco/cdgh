@@ -16,8 +16,8 @@ export default function AgeCategoryDistributionPieChart({setTableRows, setTableC
     });
 
     useEffect(() => {
-        // Parse finalData.csv to categorize and count patients by age
-        Papa.parse('/finalData.csv', {
+        // Parse finalData_01.csv to categorize and count patients by age
+        Papa.parse('/finalData_01.csv', {
             download: true,
             header: true,
             complete: (result) => {

@@ -104,15 +104,15 @@ export default function WardSexDistributionChittagong({ setTableRows, setTableCo
             {
                 label: 'Male',
                 data: wardLabels.map(ward => sexCountsByWard[ward]?.Male || 0), // Male count for each ward
-                backgroundColor: 'blue',
-                borderColor: 'blue',
+                backgroundColor: 'red',
+                borderColor: 'red',
                 borderWidth: 1,
             },
             {
                 label: 'Female',
                 data: wardLabels.map(ward => sexCountsByWard[ward]?.Female || 0), // Female count for each ward
-                backgroundColor: 'red',
-                borderColor: 'red',
+                backgroundColor: 'blue',
+                borderColor: 'blue',
                 borderWidth: 1,
             },
         ],

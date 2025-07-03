@@ -11,7 +11,7 @@ export default function AgeCategoryLineGraphChittagong({ setTableRows, setTableC
     const [ageCategoryData, setAgeCategoryData] = useState({});
 
     useEffect(() => {
-        // Parse finalData.csv to categorize and count patients by age for each subdistrict
+        // Parse finalData_01.csv to categorize and count patients by age for each subdistrict
         Papa.parse('/finalData_01.csv', {
             download: true,
             header: true,

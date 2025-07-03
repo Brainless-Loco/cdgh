@@ -19,7 +19,7 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 const DivisionWiseBarGraph = ({setTableRows, setTableCols}) => {
   const [chartData, setChartData] = useState(null);
-  const csvFilePath = './finalData.csv';
+  const csvFilePath = './finalData_01.csv';
 
   useEffect(() => {
     const fetchData = async () => {

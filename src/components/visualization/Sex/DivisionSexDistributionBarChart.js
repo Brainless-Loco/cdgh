@@ -11,8 +11,8 @@ export default function DivisionSexDistributionBarChart({setTableRows, setTableC
     const [sexCountsByDivision, setSexCountsByDivision] = useState({});
 
     useEffect(() => {
-        // Parse finalData.csv to count occurrences of male and female for each division
-        Papa.parse('/finalData.csv', {
+        // Parse finalData_01.csv to count occurrences of male and female for each division
+        Papa.parse('/finalData_01.csv', {
             download: true,
             header: true,
             complete: (result) => {

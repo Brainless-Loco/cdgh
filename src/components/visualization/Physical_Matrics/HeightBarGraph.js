@@ -24,7 +24,7 @@ export default function HeightBarGraph({ setTableRows, setTableCols }) {
     });
 
     useEffect(() => {
-        Papa.parse('/finalData.csv', {
+        Papa.parse('/finalData_01.csv', {
             download: true,
             header: true,
             complete: (result) => {

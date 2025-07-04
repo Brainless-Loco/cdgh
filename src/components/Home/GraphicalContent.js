@@ -25,6 +25,9 @@ import BMICategoryLineGraphChittagong from '../visualization/BMI/BMICategoryLine
 import HeightCategoryByDivisionPieCharts from '../visualization/Height/HeightCategoryByDivisionPieCharts'
 import WeightCategoryByDivisionPieCharts from '../visualization/Weight/WeightCategoryByDivisionPieCharts'
 import WeightCategoryLineGraphChittagong from '../visualization/Weight/WeightCategoryLineGraphChittagong'
+import HeightDistributionChittagongCityCorp from '../visualization/Height/HeightDistributionChittagongCityCorp'
+import WeightCategoryLineGraphChittagongCityCorp from '../visualization/Weight/WeightCategoryLineGraphChittagongCityCorp'
+import BMICategoryLineGraphChittagongCityCorp from '../visualization/BMI/BMICategoryLineGraphChittagongCityCorp'
 
 
 export default function GraphicalContent({selectedValue, setTableRows, setTableCols}) {
@@ -63,14 +66,17 @@ export default function GraphicalContent({selectedValue, setTableRows, setTableC
         {/* BMI */}
         {selectedValue === 'bmi-division-wise' && <BMICategoryByDivisionPieCharts setTableRows={setTableRows} setTableCols={setTableCols}/>}
         {selectedValue === 'bmi-chittagong-district' && <BMICategoryLineGraphChittagong setTableRows={setTableRows} setTableCols={setTableCols}/>}
+        {selectedValue === 'bmi-chittagong-city' && <BMICategoryLineGraphChittagongCityCorp setTableRows={setTableRows} setTableCols={setTableCols}/>}
 
         {/* Height */}
         {selectedValue === 'height-division-wise' && <HeightCategoryByDivisionPieCharts setTableRows={setTableRows} setTableCols={setTableCols}/>}
         {selectedValue === 'height-chittagong-district' && <HeightCategoryLineGraphChittagong setTableRows={setTableRows} setTableCols={setTableCols}/>}
+        {selectedValue === 'height-chittagong-city' && <HeightDistributionChittagongCityCorp setTableRows={setTableRows} setTableCols={setTableCols}/>}
 
         {/* Weight */}
         {selectedValue === 'weight-division-wise' && <WeightCategoryByDivisionPieCharts setTableRows={setTableRows} setTableCols={setTableCols}/>}
         {selectedValue === 'weight-chittagong-district' && <WeightCategoryLineGraphChittagong setTableRows={setTableRows} setTableCols={setTableCols}/>}
+        {selectedValue === 'weight-chittagong-city' && <WeightCategoryLineGraphChittagongCityCorp setTableRows={setTableRows} setTableCols={setTableCols}/>}
 
 
 

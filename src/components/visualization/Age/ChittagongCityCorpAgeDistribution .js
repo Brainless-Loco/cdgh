@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend } from 'chart.js';
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Tooltip,
+    Legend
+} from 'chart.js';
 import Papa from 'papaparse';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
@@ -11,9 +19,8 @@ export default function AgeDistributionChittagongCityCorp({ setTableRows, setTab
     const [ageCategoryCounts, setAgeCategoryCounts] = useState({});
 
     useEffect(() => {
-        let wardMapping = {}; // Store Ward No. to Ward Name mapping
+        let wardMapping = {};
 
-        // Step 1: Parse "Ward Data.csv" to create a mapping
         Papa.parse('/Ward Data.csv', {
             download: true,
             header: true,
@@ -21,14 +28,10 @@ export default function AgeDistributionChittagongCityCorp({ setTableRows, setTab
                 wardMapping = result.data.reduce((acc, row) => {
                     const wardNo = row["Ward No."]?.trim();
                     const wardName = row["Ward Name"]?.trim();
-
-                    if (wardNo && wardName) {
-                        acc[wardNo] = wardName;
-                    }
+                    if (wardNo && wardName) acc[wardNo] = wardName;
                     return acc;
                 }, {});
 
-                // Step 2: Parse "finalData_01.csv" to categorize age groups for each ward
                 Papa.parse('/finalData_01.csv', {
                     download: true,
                     header: true,
@@ -37,52 +40,54 @@ export default function AgeDistributionChittagongCityCorp({ setTableRows, setTab
                             const wardNo = row.Ward_no?.trim();
                             const isCityCorp = row.CityCorporation_Area?.trim();
                             const age = parseInt(row.Age, 10);
+                            const sex = row.Sex;
 
-                            if (isCityCorp === "Y" && wardNo && !isNaN(age)) {
+                            if (isCityCorp === "Y" && wardNo && !isNaN(age) && sex) {
                                 const wardName = wardMapping[wardNo] || `Ward ${wardNo}`;
 
                                 if (!acc[wardName]) {
                                     acc[wardName] = {
-                                        'Non-Adults': 0,
-                                        'Adults': 0,
-                                        'Mature Working Aged': 0,
-                                        'Elderly': 0,
+                                        'Non-Adults': { Male: 0, Female: 0 },
+                                        'Adults': { Male: 0, Female: 0 },
+                                        'Mature Working Aged': { Male: 0, Female: 0 },
+                                        'Elderly': { Male: 0, Female: 0 },
                                     };
                                 }
 
-                                if (age >= 0 && age < 18) acc[wardName]["Non-Adults"] += 1;
-                                else if (age >= 18 && age <= 40) acc[wardName]['Adults'] += 1;
-                                else if (age >= 41 && age <= 60) acc[wardName]['Mature Working Aged'] += 1;
-                                else if (age >= 60) acc[wardName].Elderly += 1;
+                                let category = '';
+                                if (age < 18) category = 'Non-Adults';
+                                else if (age <= 40) category = 'Adults';
+                                else if (age <= 60) category = 'Mature Working Aged';
+                                else category = 'Elderly';
+
+                                if (sex === 'M') acc[wardName][category].Male++;
+                                else if (sex === 'F') acc[wardName][category].Female++;
                             }
 
                             return acc;
                         }, {});
 
-                        // Sort wards by total population
                         const sortedEntries = Object.entries(ageCounts).sort((a, b) => {
-                            const totalA = Object.values(a[1]).reduce((sum, val) => sum + val, 0);
-                            const totalB = Object.values(b[1]).reduce((sum, val) => sum + val, 0);
-                            return totalB - totalA; // Descending order
+                            const totalA = Object.values(a[1]).reduce((sum, val) => sum + val.Male + val.Female, 0);
+                            const totalB = Object.values(b[1]).reduce((sum, val) => sum + val.Male + val.Female, 0);
+                            return totalB - totalA;
                         });
 
-                        // Extract ward names and counts
                         const sortedWards = sortedEntries.map(entry => entry[0]);
                         const sortedCounts = Object.fromEntries(sortedEntries);
 
                         setWardLabels(sortedWards);
                         setAgeCategoryCounts(sortedCounts);
 
-                        // Prepare table data
                         const tableRows = [];
                         let rowId = 0;
                         sortedEntries.forEach(([ward, ageGroups]) => {
-                            Object.keys(ageGroups).forEach((category) => {
+                            Object.entries(ageGroups).forEach(([category, counts]) => {
                                 tableRows.push({
                                     id: rowId++,
-                                    ward: ward,
+                                    ward,
                                     ageGroup: category,
-                                    count: ageGroups[category],
+                                    count: counts.Male + counts.Female,
                                 });
                             });
                         });
@@ -101,37 +106,25 @@ export default function AgeDistributionChittagongCityCorp({ setTableRows, setTab
         });
     }, [setTableRows, setTableCols]);
 
+    const makeDataset = (label, color, key) => ({
+        label,
+        data: wardLabels.map(ward => {
+            const group = ageCategoryCounts[ward]?.[key];
+            return (group?.Male || 0) + (group?.Female || 0);
+        }),
+        borderColor: color,
+        backgroundColor: color,
+        fill: false,
+        tension: 0.2,
+    });
+
     const data = {
         labels: wardLabels,
         datasets: [
-            {
-                label: 'Non-Adults',
-                data: wardLabels.map(ward => ageCategoryCounts[ward]?.['Non-Adults'] || 0),
-                borderColor: 'green',
-                backgroundColor: 'green',
-                fill: false,
-            },
-            {
-                label: 'Adults',
-                data: wardLabels.map(ward => ageCategoryCounts[ward]?.['Adults'] || 0),
-                borderColor: 'blue',
-                backgroundColor: 'blue',
-                fill: false,
-            },
-            {
-                label: 'Mature Working Aged',
-                data: wardLabels.map(ward => ageCategoryCounts[ward]?.['Mature Working Aged'] || 0),
-                borderColor: 'red',
-                backgroundColor: 'red',
-                fill: false,
-            },
-            {
-                label: 'Elderly',
-                data: wardLabels.map(ward => ageCategoryCounts[ward]?.Elderly || 0),
-                borderColor: 'yellow',
-                backgroundColor: 'yellow',
-                fill: false,
-            },
+            makeDataset('Non-Adults', 'green', 'Non-Adults'),
+            makeDataset('Adults', 'blue', 'Adults'),
+            makeDataset('Mature Working Aged', 'red', 'Mature Working Aged'),
+            makeDataset('Elderly', 'orange', 'Elderly'),
         ],
     };
 
@@ -140,7 +133,23 @@ export default function AgeDistributionChittagongCityCorp({ setTableRows, setTab
         plugins: {
             tooltip: {
                 callbacks: {
-                    label: (tooltipItem) => `${tooltipItem.dataset.label}: ${tooltipItem.raw}`,
+                    label: function (context) {
+                        const ward = context.label;
+                        const datasetLabel = context.dataset.label;
+                        const groupKey = datasetLabel;
+                        const counts = ageCategoryCounts[ward]?.[groupKey] || { Male: 0, Female: 0 };
+                        const male = counts.Male || 0;
+                        const female = counts.Female || 0;
+                        const total = male + female;
+                        const malePct = total ? ((male / total) * 100).toFixed(1) : 0;
+                        const femalePct = total ? ((female / total) * 100).toFixed(1) : 0;
+
+                        return [
+                            `${datasetLabel}: ${total} people`,
+                            `↳ Male: ${male} (${malePct}%)`,
+                            `↳ Female: ${female} (${femalePct}%)`
+                        ];
+                    },
                 },
             },
             legend: {

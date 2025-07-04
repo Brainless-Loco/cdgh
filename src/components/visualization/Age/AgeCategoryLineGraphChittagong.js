@@ -2,7 +2,15 @@ import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend } from 'chart.js';
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Tooltip,
+    Legend
+} from 'chart.js';
 import Papa from 'papaparse';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
@@ -11,119 +19,98 @@ export default function AgeCategoryLineGraphChittagong({ setTableRows, setTableC
     const [ageCategoryData, setAgeCategoryData] = useState({});
 
     useEffect(() => {
-        // Parse finalData_01.csv to categorize and count patients by age for each subdistrict
         Papa.parse('/finalData_01.csv', {
             download: true,
             header: true,
             complete: (result) => {
-                const data = result.data.filter((row) => row.ADM2_EN === 'Chittagong'); // Filter for Chittagong subdistricts
-                const subdistricts = data.reduce((acc, row) => {
-                    const subdistrict = row.ADM3_EN; // Subdistrict column
+                const data = result.data.filter((row) => row.ADM2_EN === 'Chittagong');
+
+                const categorized = {};
+
+                data.forEach((row) => {
+                    const subdistrict = row.ADM3_EN;
                     const age = parseInt(row.Age, 10);
-                    const ifCityCorp = row.CityCorporation_Area;
-    
-                    if (!subdistrict || isNaN(age)) return acc;
-    
-                    if (!acc[subdistrict] && ifCityCorp !== "Y") {
-                        acc[subdistrict] = {
-                            'Non-Adults': 0,
-                            'Adults': 0,
-                            'Mature Working Aged': 0,
-                            Elderly: 0,
-                            total: 0, // Track total count per subdistrict
+                    const sex = row.Sex;
+                    const isCityCorp = row.CityCorporation_Area;
+
+                    if (!subdistrict || isNaN(age) || isCityCorp === 'Y' || !sex) return;
+
+                    if (!categorized[subdistrict]) {
+                        categorized[subdistrict] = {
+                            'Non-Adults': { Male: 0, Female: 0 },
+                            'Adults': { Male: 0, Female: 0 },
+                            'Mature Working Aged': { Male: 0, Female: 0 },
+                            'Elderly': { Male: 0, Female: 0 },
+                            total: 0,
                         };
                     }
-                    if (ifCityCorp !== "Y") {
-                        if (age >= 0 && age < 18) acc[subdistrict]["Non-Adults"] += 1;
-                        else if (age >= 18 && age <= 40) acc[subdistrict]['Adults'] += 1;
-                        else if (age >= 41 && age <= 60) acc[subdistrict]['Mature Working Aged'] += 1;
-                        else if (age >= 60) acc[subdistrict].Elderly += 1;
-    
-                        acc[subdistrict].total += 1; // Increment total count
-                    }
-    
-                    return acc;
-                }, {});
-    
-                // **🔹 Sorting subdistricts by total count (Descending Order)**
-                const sortedEntries = Object.entries(subdistricts).sort((a, b) => b[1].total - a[1].total);
-                
-                // Extract sorted subdistricts
-                const sortedSubdistricts = Object.fromEntries(sortedEntries);
-    
-                // Set the categorized data for age groups in subdistricts
-                setAgeCategoryData(sortedSubdistricts);
-    
-                // Prepare table rows for display
-                let tableRows = [];
-                let rowId = 0; // Counter for unique row ID
-    
-                sortedEntries.forEach(([subdistrict, subdistrictData]) => {
-                    Object.keys(subdistrictData).forEach((ageGroup) => {
-                        if (ageGroup !== 'total') { // Exclude 'total' from age groups
-                            tableRows.push({
-                                id: rowId++, // Unique row ID
-                                subdistrict: subdistrict,
-                                ageGroup: ageGroup,
-                                count: subdistrictData[ageGroup],
-                            });
-                        }
+
+                    let category = '';
+                    if (age < 18) category = 'Non-Adults';
+                    else if (age <= 40) category = 'Adults';
+                    else if (age <= 60) category = 'Mature Working Aged';
+                    else category = 'Elderly';
+
+                    if (sex === 'M') categorized[subdistrict][category].Male++;
+                    else if (sex === 'F') categorized[subdistrict][category].Female++;
+
+                    categorized[subdistrict].total++;
+                });
+
+                const sortedEntries = Object.entries(categorized).sort((a, b) => b[1].total - a[1].total);
+                const sortedData = Object.fromEntries(sortedEntries);
+
+                setAgeCategoryData(sortedData);
+
+                const tableRows = [];
+                let id = 0;
+                sortedEntries.forEach(([subdistrict, data]) => {
+                    ['Non-Adults', 'Adults', 'Mature Working Aged', 'Elderly'].forEach((group) => {
+                        const { Male, Female } = data[group];
+                        tableRows.push({
+                            id: id++,
+                            subdistrict,
+                            ageGroup: group,
+                            male: Male,
+                            female: Female,
+                            total: Male + Female,
+                        });
                     });
                 });
-    
-                // Define table columns
-                const tableCols = [
+
+                setTableRows(tableRows);
+                setTableCols([
                     { field: 'subdistrict', headerName: 'Subdistrict', flex: 1 },
                     { field: 'ageGroup', headerName: 'Age Group', flex: 1 },
-                    { field: 'count', headerName: 'Count', flex: 1 },
-                ];
-    
-                // Set the table rows and columns to state
-                setTableRows(tableRows);
-                setTableCols(tableCols);
+                    { field: 'male', headerName: 'Male', flex: 1 },
+                    { field: 'female', headerName: 'Female', flex: 1 },
+                    { field: 'total', headerName: 'Total', flex: 1 },
+                ]);
             },
         });
     }, [setTableRows, setTableCols]);
-    
-    
 
+    const labels = Object.keys(ageCategoryData);
 
-    const labels = Object.keys(ageCategoryData); // Subdistrict names
+    const makeDataset = (label, color, groupKey) => ({
+        label,
+        data: labels.map((subdistrict) => {
+            const group = ageCategoryData[subdistrict]?.[groupKey];
+            return (group?.Male || 0) + (group?.Female || 0);
+        }),
+        borderColor: color,
+        backgroundColor: color,
+        tension: 0,
+        fill: false,
+    });
+
     const data = {
         labels,
         datasets: [
-            {
-                label: 'Non-Adults (0-18)',
-                data: labels.map((subdistrict) => ageCategoryData[subdistrict]?.['Non-Adults'] || 0),
-                borderColor: 'green',
-                backgroundColor: 'green',
-                tension: 0, // Straight lines
-                fill: false,
-            },
-            {
-                label: 'Adults (18-40)',
-                data: labels.map((subdistrict) => ageCategoryData[subdistrict]?.['Adults'] || 0),
-                borderColor: 'blue',
-                backgroundColor: 'blue',
-                tension: 0, // Straight lines
-                fill: false,
-            },
-            {
-                label: 'Mature Working Aged (41-60)',
-                data: labels.map((subdistrict) => ageCategoryData[subdistrict]?.['Mature Working Aged'] || 0),
-                borderColor: 'red',
-                backgroundColor: 'red',
-                tension: 0, // Straight lines
-                fill: false,
-            },
-            {
-                label: 'Elderly (60+)',
-                data: labels.map((subdistrict) => ageCategoryData[subdistrict]?.Elderly || 0),
-                borderColor: 'yellow',
-                backgroundColor: 'yellow',
-                tension: 0, // Straight lines
-                fill: false,
-            },
+            makeDataset('Non-Adults (0-18)', 'green', 'Non-Adults'),
+            makeDataset('Adults (18-40)', 'blue', 'Adults'),
+            makeDataset('Mature Working Aged (41-60)', 'red', 'Mature Working Aged'),
+            makeDataset('Elderly (60+)', 'orange', 'Elderly'),
         ],
     };
 
@@ -132,8 +119,23 @@ export default function AgeCategoryLineGraphChittagong({ setTableRows, setTableC
         plugins: {
             tooltip: {
                 callbacks: {
-                    label: (tooltipItem) => {
-                        return `${tooltipItem.dataset.label}: ${tooltipItem.raw}`;
+                    label: function (context) {
+                        const subdistrict = context.label;
+                        const ageGroup = context.dataset.label.split(' ')[0]; // matches 'Non-Adults' etc.
+                        const key = ageGroup === 'Mature' ? 'Mature Working Aged' : ageGroup; // special case
+
+                        const groupData = ageCategoryData[subdistrict]?.[key] || { Male: 0, Female: 0 };
+                        const male = groupData.Male || 0;
+                        const female = groupData.Female || 0;
+                        const total = male + female;
+                        const malePct = total ? ((male / total) * 100).toFixed(1) : 0;
+                        const femalePct = total ? ((female / total) * 100).toFixed(1) : 0;
+
+                        return [
+                            `${context.dataset.label}: ${total} people`,
+                            `↳ Male: ${male} (${malePct}%)`,
+                            `↳ Female: ${female} (${femalePct}%)`
+                        ];
                     },
                 },
             },
@@ -143,16 +145,11 @@ export default function AgeCategoryLineGraphChittagong({ setTableRows, setTableC
         },
         scales: {
             x: {
-                title: {
-                    display: true,
-                    text: 'Subdistricts',
-                },
+                title: { display: true, text: 'Subdistricts' },
+                ticks: { maxRotation: 90, minRotation: 90 },
             },
             y: {
-                title: {
-                    display: true,
-                    text: 'Number of Patients',
-                },
+                title: { display: true, text: 'Number of Patients' },
                 beginAtZero: true,
             },
         },
@@ -160,7 +157,9 @@ export default function AgeCategoryLineGraphChittagong({ setTableRows, setTableC
 
     return (
         <Box className="h-full w-full">
-            <Typography variant="h6">Age Distribution by Subdistrict (Chittagong District)</Typography>
+            <Typography variant="h6" className="mb-2">
+                Age Distribution by Subdistrict (Chittagong District)
+            </Typography>
             <Box className="h-[95%] w-full overflow-hidden flex justify-center">
                 <Line data={data} options={options} />
             </Box>
